@@ -11,5 +11,8 @@ namespace app\models;
 
 class test
 {
+    public function d()
+    {
 
+    }
 }

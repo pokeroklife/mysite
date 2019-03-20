@@ -1,10 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\modules\admin;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\AuthAssignment;
+use app\modules\admin\AuthAssignment;
 
 /**
  * AuthAssignmentSearch represents the model behind the search form of `app\models\AuthAssignment`.

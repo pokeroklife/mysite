@@ -43,7 +43,8 @@ AppAsset::register($this);
      if (Yii::$app->user->can('administration')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
         $menuItems[] = ['label' => 'TEST', 'url' => ['/test/test']];
-        $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/index']];
+        $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
+        $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

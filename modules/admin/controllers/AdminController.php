@@ -1,10 +1,10 @@
 <?php
 
-namespace app\controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
-use app\models\AuthAssignment;
-use app\models\AuthAssignmentSearch;
+use app\modules\admin\AuthAssignment;
+use app\modules\admin\AuthAssignmentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

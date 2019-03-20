@@ -1,15 +1,12 @@
 <?php
-$form = \yii\widgets\ActiveForm::begin(['id' => 'testForm', 'method' => 'POST']);
-echo $form->field($user, 'email')->textarea();
-echo $form->field($user, 'username')->textarea();
-echo $form->field($user, 'status')->textInput();
-echo \yii\helpers\Html::submitButton('send');
+
+use app\widgets\yandexWidget;
+use yii\jui\Draggable;
+use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+$model = new \app\models\User();
+?>
+
+<?= yandexWidget::widget(['width' => '1200', 'height' => '700']) ?>
 
 
-\yii\widgets\ActiveForm::end();
-
-\app\widgets\myWidgets::begin([
-    'message' => 'hi'
-]);
-
-\app\widgets\myWidgets::end();

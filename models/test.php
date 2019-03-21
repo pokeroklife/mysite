@@ -1,18 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Романенко
- * Date: 18.03.2019
- * Time: 14:03
- */
+
 
 namespace app\models;
 
 
-class test
+use yii\base\Model;
+
+class Test extends Model
 {
+    const TEST_BEGIN = 'test begin';
+
+    public function init()
+    {
+        $this->on(Test::TEST_BEGIN, ['app\models\Test', 'd']);
+    }
+
+
     public function d()
     {
+        var_dump('ddd');
+    }
 
+    public  function role()
+    {
+
+        $this->trigger(Test::TEST_BEGIN);
     }
 }

@@ -15,7 +15,7 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $id;
-    public $verifyCode;
+//    public $verifyCode;
 
     /**
      * @inheritdoc
@@ -34,7 +34,7 @@ class SignupForm extends Model
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This email address has already been taken.'],
             ['password', 'required'],
             ['password', 'string', 'min' => 2],
-            ['verifyCode', 'captcha'],
+//            ['verifyCode', 'captcha'],
         ];
     }
 

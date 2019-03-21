@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$db2 = require __DIR__ . '/db2.php';
 
 $config = [
     'id' => 'basic',
@@ -11,6 +12,7 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
     ],
+    'layout' => 'main',
     'modules' => [
         'admin' => [
             'class' => 'app\modules\admin\Admin',
@@ -51,6 +53,7 @@ $config = [
             ],
         ],
         'db' => $db,
+        'db2' => $db2,
 
         'urlManager' => [
             'enablePrettyUrl' => true,

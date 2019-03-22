@@ -2,7 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-$db2 = require __DIR__ . '/db2.php';
+//$db2 = require __DIR__ . '/db2.php';
 
 $config = [
     'id' => 'basic',
@@ -14,8 +14,12 @@ $config = [
     ],
     'layout' => 'main',
     'modules' => [
+        'news' => [
+            'class' => 'app\modules\news\News',
+        ],
         'admin' => [
             'class' => 'app\modules\admin\Admin',
+
         ],
     ],
     'components' => [
@@ -38,7 +42,7 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
+            // send all mails to a file by news. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
             'useFileTransport' => true,
@@ -53,7 +57,7 @@ $config = [
             ],
         ],
         'db' => $db,
-        'db2' => $db2,
+//        'db2' => $db2,
 
         'urlManager' => [
             'enablePrettyUrl' => true,

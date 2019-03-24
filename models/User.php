@@ -21,6 +21,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function behaviors()
     {
+        $this->on(ActiveRecord::EVENT_AFTER_INSERT, [$this, 'setRole']);
         return [
             'timestamp' => [
             'class' => TimestampBehavior::className(),
@@ -134,14 +135,9 @@ class User extends ActiveRecord implements IdentityInterface
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
 
-    public function getRole()
+    public function setRole()
     {
-        $this->find()->where(['id' => $this->id])->all();
-    }
-
-    public function setRole($email)
-    {
-
-        return $this->find()->where(['email' => $email])->asArray()->all();
+        $userRole = Yii::$app->authManager->getRole('user');
+        Yii::$app->authManager->assign($userRole, $this->owner->id);
     }
 }

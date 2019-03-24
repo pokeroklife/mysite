@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\SignupForm;
 use app\models\PasswordResetRequestForm;
 use app\models\ResetPasswordForm;
-use app\models\User;
+
 
 class SiteController extends Controller
 {
@@ -90,7 +90,6 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
-                $model->setRole();
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->goHome();
 

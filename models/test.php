@@ -18,6 +18,7 @@ class Test extends Model
 
     public function d()
     {
+
         var_dump('ddd');
     }
 

@@ -2,19 +2,19 @@
 
 namespace app\modules\news\controllers;
 
+use app\modules\news\Categories;
+use yii\base\Component;
 use yii\web\Controller;
 
-/**
- * Default controller for the `news` module
- */
+
 class NewsController extends Controller
 {
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
+    public $layout = 'myLayout';
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new Categories();
+        $categories = $model->getCategoryName();
+
+        return $this->render('index', compact('categories'));
     }
 }

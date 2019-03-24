@@ -61,11 +61,4 @@ class SignupForm extends Model
         return $user->save() ? $user : null;
     }
 
-    public function setRole()
-    {
-        $user = new User();
-        $info = $user->setRole($this->email);
-        $userRole = Yii::$app->authManager->getRole('user');
-        Yii::$app->authManager->assign($userRole, $info['0']['id']);
-    }
 }

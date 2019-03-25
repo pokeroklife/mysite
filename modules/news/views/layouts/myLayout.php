@@ -3,6 +3,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $content string */
+
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -15,11 +16,9 @@ use yii\helpers\Html;
     </head>
     <body>
     <?php $this->beginBody() ?>
-    <header>Моя компания</header>
-
 
     <?= $content ?>
-    <footer>Моя компания &copy; 2014</footer>
+
     <?php $this->endBody() ?>
     </body>
     </html>

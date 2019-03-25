@@ -54,8 +54,14 @@ class Categories extends \yii\db\ActiveRecord
         return $this->hasOne(CategoriesNews::className(), ['categories_id' => 'id']);
     }
 
-    public function getCategoryName()
+    public static function getCategoryName(): array
     {
-        return Categories::find()->all();
+        return self::find()->all();
+    }
+
+    public function createCategory()
+    {
+         $categories = new Categories();
+
     }
 }

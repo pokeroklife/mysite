@@ -45,7 +45,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'TEST', 'url' => ['/test/test']];
         $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
         $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
-        $menuItems[] = ['label' => 'News', 'url' => ['/news/news']];
+        $menuItems[] = ['label' => 'NewsCreate', 'url' => ['/news/news']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -56,7 +56,7 @@ AppAsset::register($this);
             . '</li>';
     } else if (Yii::$app->user->can('userRight')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-         $menuItems[] = ['label' => 'News', 'url' => ['/news/news']];
+         $menuItems[] = ['label' => 'NewsCreate', 'url' => ['/news/news']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

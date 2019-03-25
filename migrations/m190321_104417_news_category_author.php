@@ -43,8 +43,8 @@ class m190321_104417_news_category_author extends Migration
 
         $this->createTable('author', [
             'id' => $this->primaryKey()->unsigned(),
-            'name' => $this->string()->notNull()->unique(),
-            'last_name' => $this->smallInteger()->notNull()->defaultValue(1)->unsigned(),
+            'name' => $this->string()->notNull(),
+            'last_name' => $this->string()->notNull(),
             'created_at' => $this->integer()->notNull()->unsigned(),
             'updated_at' => $this->integer()->notNull()->unsigned(),
         ], $tableOptions);

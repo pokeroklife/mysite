@@ -8,11 +8,11 @@ use yii\filters\VerbFilter;
 
 class SiteController extends Controller
 {
-    public function behaviors()
+    public function behaviors():array
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'only' => ['index'],
                 'rules' => [
                     [
@@ -28,7 +28,7 @@ class SiteController extends Controller
                 ],
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'logout' => ['post'],
                 ],
@@ -36,7 +36,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function actions()
+    public function actions():array
     {
         return [
             'error' => [

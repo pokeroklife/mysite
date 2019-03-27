@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\news;
+namespace app\modules\news\models;
 
 use Yii;
 
@@ -12,21 +12,28 @@ use Yii;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
- *
- * @property CategoriesNews $id0
  */
 class Categories extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function tableName()
     {
         return 'categories';
     }
 
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
     public static function getDb()
     {
         return Yii::$app->get('db2');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -34,10 +41,12 @@ class Categories extends \yii\db\ActiveRecord
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'unique'],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriesNews::className(), 'targetAttribute' => ['id' => 'categories_id']],
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -49,19 +58,8 @@ class Categories extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getId0()
+    public static function getCategoryName()
     {
-        return $this->hasOne(CategoriesNews::className(), ['categories_id' => 'id']);
-    }
-
-    public static function getCategoryName(): array
-    {
-        return self::find()->all();
-    }
-
-    public function createCategory()
-    {
-         $categories = new Categories();
-
+        return static::find()->asArray()->all();
     }
 }

@@ -24,7 +24,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->on(ActiveRecord::EVENT_AFTER_INSERT, [$this, 'setRole']);
         return [
             'timestamp' => [
-            'class' => TimestampBehavior::className(),
+            'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],

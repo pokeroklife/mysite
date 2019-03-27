@@ -1,8 +1,10 @@
 <?php
 
-namespace app\modules\news;
+namespace app\modules\news\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "news".
@@ -20,12 +22,12 @@ use Yii;
  * @property Author $author
  * @property CategoriesNews $id0
  */
-class NewsCreate extends \yii\db\ActiveRecord
+class NewsCreate extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'news';
     }
@@ -41,33 +43,44 @@ class NewsCreate extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function behaviors(): array
     {
         return [
-            [['author_id', 'name', 'short_description', 'text', 'visits', 'created_at', 'updated_at'], 'required'],
-            [['author_id', 'status', 'visits', 'created_at', 'updated_at'], 'integer'],
+            'class' => TimestampBehavior::class,
+        ];
+
+
+    }
+
+    public function rules(): array
+    {
+        return [
+            [['author_id', 'name', 'short_description', 'text'], 'required'],
+            [['author_id', 'status'], 'integer'],
             [['text'], 'string'],
             [['name', 'short_description'], 'string', 'max' => 255],
-            [['name'], 'unique'],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoriesNews::className(), 'targetAttribute' => ['id' => 'news_id']],
+
+            [
+                ['id'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => CategoriesNews::class,
+                'targetAttribute' => ['id' => 'news_id']
+            ],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
-            'id' => 'ID',
             'author_id' => 'Author ID',
             'name' => 'Name',
             'short_description' => 'Short Description',
             'text' => 'Text',
             'status' => 'Status',
-            'visits' => 'Visits',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 
@@ -76,7 +89,7 @@ class NewsCreate extends \yii\db\ActiveRecord
      */
     public function getAuthor()
     {
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 
     /**
@@ -84,6 +97,13 @@ class NewsCreate extends \yii\db\ActiveRecord
      */
     public function getId0()
     {
-        return $this->hasOne(CategoriesNews::className(), ['news_id' => 'id']);
+        return $this->hasOne(CategoriesNews::class, ['news_id' => 'id']);
     }
+
+    public function getNews()
+    {
+        return $this->find()->all();
+    }
+
+
 }

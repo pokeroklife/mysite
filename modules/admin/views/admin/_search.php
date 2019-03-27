@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="auth-assignment-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'actions' => ['index'],
         'method' => 'get',
     ]); ?>
 

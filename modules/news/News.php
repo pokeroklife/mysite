@@ -8,7 +8,6 @@
 
 namespace app\modules\news;
 
-
 use yii\base\Module;
 
 class News extends Module

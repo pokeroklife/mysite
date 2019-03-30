@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AuthAssignmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Auth Assignments';
+$this->title = 'Установка роли пользователям';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auth-assignment-index">

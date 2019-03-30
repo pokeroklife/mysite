@@ -60,6 +60,6 @@ class Categories extends \yii\db\ActiveRecord
 
     public static function getCategoryName()
     {
-        return static::find()->asArray()->all();
+        return static::find()->select('name')->all();
     }
 }

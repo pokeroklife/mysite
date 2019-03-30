@@ -136,7 +136,6 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function setRole()
     {
-
         $userRole = Yii::$app->authManager->getRole('user');
         Yii::$app->authManager->assign($userRole, $this->owner->id);
     }

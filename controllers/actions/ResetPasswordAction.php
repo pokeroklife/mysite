@@ -7,6 +7,7 @@
  */
 
 namespace app\controllers\actions;
+
 use Yii;
 
 use app\models\ResetPasswordForm;

@@ -2,6 +2,8 @@
 
 namespace app\modules\news\models;
 
+
+
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
@@ -14,12 +16,12 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $short_description
  * @property string $text
+ * @property string $upload_image
  * @property int $status
  * @property int $visits
  * @property int $created_at
  * @property int $updated_at
  *
- * @property Author $author
  * @property CategoriesNews $id0
  */
 class NewsCreate extends ActiveRecord
@@ -35,7 +37,7 @@ class NewsCreate extends ActiveRecord
     /**
      * @return \yii\db\Connection the database connection used by this AR class.
      */
-    public static function getDb()
+    public static function getDb():object
     {
         return Yii::$app->get('db2');
     }
@@ -45,6 +47,7 @@ class NewsCreate extends ActiveRecord
      */
     public function behaviors(): array
     {
+
         return [
             'class' => TimestampBehavior::class,
         ];
@@ -55,9 +58,10 @@ class NewsCreate extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['author_id', 'name', 'short_description', 'text'], 'required'],
+            [['author_id', 'name', 'short_description', 'text', 'upload_image'], 'required'],
             [['author_id', 'status'], 'integer'],
             [['text'], 'string'],
+
             [['name', 'short_description'], 'string', 'max' => 255],
 
             [
@@ -83,27 +87,17 @@ class NewsCreate extends ActiveRecord
             'status' => 'Status',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor()
-    {
-        return $this->hasOne(Author::class, ['id' => 'author_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getId0()
+    public function getId0():array
     {
         return $this->hasOne(CategoriesNews::class, ['news_id' => 'id']);
     }
 
-    public function getNews()
+    public static function getNews():array
     {
-        return $this->find()->all();
+        return static::find()->all();
     }
-
 
 }

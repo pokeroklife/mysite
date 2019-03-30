@@ -42,6 +42,7 @@ AppAsset::register($this);
     ];
      if (Yii::$app->user->can('administration')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+        $menuItems[] = ['label' => 'Test', 'url' => ['/test/index']];
         $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
         $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
         $menuItems[] = ['label' => 'News Editor', 'url' => ['/news/news']];
@@ -55,7 +56,7 @@ AppAsset::register($this);
             . '</li>';
     } else if (Yii::$app->user->can('userRight')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-         $menuItems[] = ['label' => 'NewsCreate', 'url' => ['/news/news']];
+         $menuItems[] = ['label' => 'News', 'url' => ['/news/news/']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

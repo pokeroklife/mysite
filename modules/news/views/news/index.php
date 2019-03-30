@@ -21,10 +21,14 @@ use yii\bootstrap\NavBar;
 
     ];
 
-//    foreach ($categories as $category) {
-//        $menuItems[] = ['label' => $category['name'], 'url' => ['/news/news/' . strtolower($category['name'])]];
-//    }
-    $menuItems[] = ['label' => 'News editor', 'url' => ['news/editor']];
+    foreach ($categories as $category) {
+        $menuItems[] = ['label' => $category->name, 'url' => ['/news/news/view'
+//            . strtolower($category['id'])
+        ]];
+    }
+    if(Yii::$app->user->can('administration')) {
+        $menuItems[] = ['label' => 'News editor', 'url' => ['news/editor']];
+    }
     $menuItems[] = '<li>'
         . Html::beginForm(['/site/logout'], 'post')
         . Html::submitButton(

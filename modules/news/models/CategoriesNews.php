@@ -59,6 +59,8 @@ class CategoriesNews extends \yii\db\ActiveRecord
      */
     public function getNews()
     {
-        return $this->hasOne(News::className(), ['id' => 'news_id']);
+        return $this->hasOne(News::class, ['id' => 'news_id']);
     }
+
+
 }

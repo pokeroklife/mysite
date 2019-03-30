@@ -8,7 +8,7 @@ use yii\filters\VerbFilter;
 
 class SiteController extends Controller
 {
-    public function behaviors():array
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -36,7 +36,7 @@ class SiteController extends Controller
         ];
     }
 
-    public function actions():array
+    public function actions(): array
     {
         return [
             'error' => [

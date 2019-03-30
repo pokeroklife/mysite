@@ -20,7 +20,7 @@ class SignupForm extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules():array
     {
         return [
             ['username', 'trim'],
@@ -48,14 +48,14 @@ class SignupForm extends Model
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels():array
     {
         return [
             'verifyCode' => 'Verification Code',
         ];
     }
 
-    public function signup()
+    public function signup():object
     {
 
         if (!$this->validate()) {

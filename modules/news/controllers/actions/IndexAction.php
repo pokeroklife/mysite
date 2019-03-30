@@ -25,7 +25,6 @@ class IndexAction extends Action
     {
         $categories = $this->categoryProvider->getCategoryName();
 
-
         return $this->controller->render('index', compact('categories'));
     }
 }

@@ -7,9 +7,9 @@ use yii\web\Controller;
 
 class NewsController extends Controller
 {
+    public $layout = 'newsLayout';
 
-
-    public function actions():array
+    public function actions(): array
     {
         $actions = parent::actions();
         $actions ['index'] = ['class' => 'app\modules\news\controllers\actions\IndexAction'];

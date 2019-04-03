@@ -1,26 +1,7 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Магазин электроники</title>
-</head>
-<body>
-
-<header>
-    <ul>
-        <li><a href="index">Главная</a></li>
-        <li><a href="catalog">Каталог</a></li>
-        <li><a href="contact">Контакты</a></li>
-    </ul>
-</header>
-<hr>
-
-
 <h1><b>Компьютер</b></h1><br>
-<a href="/img/komp.jpg"><img src="/img/komp.jpg" alt="Foto" title="This is komp" width="300" height="300"></a>
+<div class="image">
+    <a href="/img/komp.jpg"><img src="/img/komp.jpg" alt="Foto" title="This is komp" width="300" height="300"></a>
+</div>
 <p>Описание товара компьютер, краткое лаконичное</p><br>
 <h3><i>Характеристики</i></h3><br>
 <ol>
@@ -50,9 +31,4 @@
         <label>Использование label <input type="radio" name="radio"></label>
     </fieldset>
 </form>
-<footer>
-    <hr>
-    <sup>&copy;Все права защищены</sup>
-</footer>
-</body>
-</html>
+

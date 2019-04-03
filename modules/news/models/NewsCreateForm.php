@@ -31,11 +31,11 @@ class NewsCreateForm extends Model
             [['name', 'newsDescription', 'newsText'], 'string', 'min' => 5],
             ['newsStatus', 'default', 'value' => 1],
             ['newsStatus', 'integer', 'min' => 0, 'max' => 1],
-            [['uploadImage'], 'file'],
+            [['uploadImage'], 'file', 'extensions' => ['gif', 'png', 'jpg']],
             [
                 'name',
                 'unique',
-                'targetClass' => NewsCreate::class,
+                'targetClass' => News::class,
                 'message' => 'Эта новость уже существует'
             ],
 
@@ -55,38 +55,32 @@ class NewsCreateForm extends Model
         ];
     }
 
-    public function saveNews()
+    public function insertNews()
     {
         if (!$this->validate()) {
-            return null;
+            return false;
         }
+        $newsData = new News();
+        if (empty($newsData->upload_image = $this->upload())) {
+            \Yii::$app->session->setFlash('success', 'Файл отсутствует');
+            return false;
+        } else {
+            $newsData->author_id = \Yii::$app->user->id;
+            $newsData->categories_id = $this->categories;
+            $newsData->name = $this->name;
+            $newsData->short_description = $this->newsDescription;
+            $newsData->text = $this->newsText;
+            $newsData->status = $this->newsStatus;
+            return $newsData->save() ?? null;
 
-        $newsData = new NewsCreate();
-        $newsData->author_id = \Yii::$app->user->id;
-        $newsData->name = $this->name;
-        $newsData->short_description = $this->newsDescription;
-        $newsData->text = $this->newsText;
-        $newsData->status = $this->newsStatus;
-        if (\Yii::$app->request->isPost) {
-            $this->uploadImage = $this->upload();
         }
-        $newsData->upload_image = $this->uploadImage;
-
-        return $newsData->save() ? $newsData : null;
-    }
-
-    public function setRelations($info): bool
-    {
-        $relations = new CategoriesNews();
-        $relations->categories_id = $this->categories;
-        $relations->news_id = $info->id;
-
-        return $relations->save() ?? null;
     }
 
     public function upload()
     {
-        $file = UploadedFile::getInstance($this, 'uploadImage');
+        if (empty($file = UploadedFile::getInstance($this, 'uploadImage'))) {
+            return false;
+        }
         $aliasImage = "@webroot/img/$file->baseName.$file->extension";
         $aliasSmallImage = "@webroot/img/small/$file->baseName.$file->extension";
         $file->saveAs(\Yii::getAlias($aliasImage));

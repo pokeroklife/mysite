@@ -2,12 +2,12 @@
 
 namespace app\modules\news\providers;
 
-use app\modules\news\models\NewsCreate;
+use app\modules\news\models\News;
 
 class ViewNewsProvider
 {
-    public function GetNews()
+    public function getNews($id = null)
     {
-       return NewsCreate::getNews();
+        return News::selectNews($id);
     }
 }

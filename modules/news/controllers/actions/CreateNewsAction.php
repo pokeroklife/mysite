@@ -2,8 +2,6 @@
 
 namespace app\modules\news\controllers\actions;
 
-
-use Yii;
 use app\modules\news\models\NewsCreateForm;
 use yii\base\Action;
 
@@ -12,11 +10,13 @@ class CreateNewsAction extends Action
     public function run()
     {
         $model = new NewsCreateForm();
-        if ($model->load(Yii::$app->request->post()) && ($info = $model->saveNews()) && $model->setRelations($info)) {
-            Yii::$app->session->setFlash('success', 'Статья сохранена');
+
+        if ($model->load(\Yii::$app->request->post()) && ($info = $model->insertNews())) {
+            \Yii::$app->session->setFlash('success', 'Статья сохранена');
             return $this->controller->render('createNews', compact('model'));
         }
-
         return $this->controller->render('createNews', compact('model'));
     }
+
 }
+

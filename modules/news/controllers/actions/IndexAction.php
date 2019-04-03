@@ -21,10 +21,11 @@ class IndexAction extends Action
         $this->categoryProvider = $categoryProvider;
     }
 
-    public function run()
+    public function run($id = null)
     {
-        $categories = $this->categoryProvider->getCategoryName();
-
-        return $this->controller->render('index', compact('categories'));
+        if ($id === null) {
+            $categories = $this->categoryProvider->getCategoryName();
+            return $this->controller->render('index', compact('categories'));
+        }
     }
 }

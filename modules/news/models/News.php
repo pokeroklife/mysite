@@ -2,17 +2,15 @@
 
 namespace app\modules\news\models;
 
-
-
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "news".
  *
  * @property int $id
  * @property int $author_id
+ * @property int $categories_id
  * @property string $name
  * @property string $short_description
  * @property string $text
@@ -22,14 +20,13 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property CategoriesNews $id0
  */
-class NewsCreate extends ActiveRecord
+class News extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName(): string
+    public static function tableName()
     {
         return 'news';
     }
@@ -37,7 +34,7 @@ class NewsCreate extends ActiveRecord
     /**
      * @return \yii\db\Connection the database connection used by this AR class.
      */
-    public static function getDb():object
+    public static function getDb()
     {
         return Yii::$app->get('db2');
     }
@@ -47,57 +44,62 @@ class NewsCreate extends ActiveRecord
      */
     public function behaviors(): array
     {
-
         return [
             'class' => TimestampBehavior::class,
         ];
-
-
     }
 
-    public function rules(): array
+    public function rules()
     {
         return [
-            [['author_id', 'name', 'short_description', 'text', 'upload_image'], 'required'],
-            [['author_id', 'status'], 'integer'],
+            [['name', 'short_description', 'text', 'categories_id'], 'required'],
+            [['author_id', 'status', 'visits', 'categories_id'], 'integer'],
             [['text'], 'string'],
+            [['name', 'short_description', 'upload_image'], 'string', 'max' => 255],
 
-            [['name', 'short_description'], 'string', 'max' => 255],
-
-            [
-                ['id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => CategoriesNews::class,
-                'targetAttribute' => ['id' => 'news_id']
-            ],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels(): array
+    public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'author_id' => 'Author ID',
             'name' => 'Name',
             'short_description' => 'Short Description',
             'text' => 'Text',
+            'upload_image' => 'Upload Image',
             'status' => 'Status',
+            'visits' => 'Visits',
+            'categories_id' => 'categoriesId',
         ];
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0():array
+    public function getId0()
     {
-        return $this->hasOne(CategoriesNews::class, ['news_id' => 'id']);
+        return $this->hasOne(Categories::class, ['id' => 'categories_id']);
     }
 
-    public static function getNews():array
+    public static function selectNews($id): array
     {
-        return static::find()->all();
+
+        if ($id === null) {
+            return static::find()->all();
+        } else {
+
+            return static::find()->where(['id' => $id])->all();
+        }
     }
 
+    public function getCategoryNews($category)
+    {
+        return static::find()->where(['categories_id' => $category])->all();
+    }
 }
+

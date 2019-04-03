@@ -12,6 +12,7 @@ use Yii;
  * @property int $status
  * @property int $created_at
  * @property int $updated_at
+ *
  */
 class Categories extends \yii\db\ActiveRecord
 {
@@ -40,7 +41,6 @@ class Categories extends \yii\db\ActiveRecord
             [['name', 'created_at', 'updated_at'], 'required'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
         ];
     }
 
@@ -58,8 +58,18 @@ class Categories extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoriesNews()
+    {
+        return $this->hasMany(News::class, ['categories_id' => 'id']);
+    }
+
     public static function getCategoryName()
     {
-        return static::find()->select('name')->all();
+        return static::find()->select(['id', 'name'] )->all();
     }
 }
+
+

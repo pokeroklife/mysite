@@ -1,0 +1,33 @@
+.menu_news {
+    padding: 15px;
+    border-bottom: 1px solid black;
+}
+
+.menu_news li {
+    display: inline;
+    padding-right: 15px;
+    font-size: 20px;
+    font-family: cursive;
+
+}
+
+.menu_news li a {
+    padding: 5px;
+}
+
+.menu_news li a:hover {
+    color: black;
+    background-color: whitesmoke;
+
+}
+
+.headersNews {
+    width: 1200px;
+    margin: auto;
+}
+
+.card {
+    float: left;
+    padding: 30px;
+
+}

@@ -13,6 +13,8 @@ use yii\base\Controller;
 
 class TestController extends Controller
 {
+    public $layout = 'myLayout';
+
     public function actionIndex()
     {
         return $this->render('index');

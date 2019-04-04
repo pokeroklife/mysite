@@ -19,7 +19,9 @@ $config = [
         ],
         'admin' => [
             'class' => 'app\modules\admin\Admin',
-
+        ],
+        'blog' => [
+            'class' => 'app\modules\blog\Blog',
         ],
     ],
     'components' => [
@@ -71,7 +73,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'site'=>'/site/index',
+                'site' => '/site/index',
             ],
         ],
 

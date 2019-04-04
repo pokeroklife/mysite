@@ -1,6 +1,7 @@
 <?php
+declare(strict_types = 1);
 
-namespace app\modules\news\models;
+namespace app\modules\blog\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
@@ -12,9 +13,9 @@ use yii\behaviors\TimestampBehavior;
  * @property int $author_id
  * @property int $categories_id
  * @property string $name
- * @property string $short_description
+ * @property string $description
  * @property string $text
- * @property string $upload_image
+ * @property string $image
  * @property int $status
  * @property int $visits
  * @property int $created_at
@@ -26,17 +27,9 @@ class News extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName():string
     {
         return 'news';
-    }
-
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('db2');
     }
 
     /**
@@ -49,13 +42,13 @@ class News extends \yii\db\ActiveRecord
         ];
     }
 
-    public function rules()
+    public function rules():array
     {
         return [
-            [['name', 'short_description', 'text', 'categories_id'], 'required'],
+            [['name', 'description', 'text', 'categories_id'], 'required'],
             [['author_id', 'status', 'visits', 'categories_id'], 'integer'],
             [['text'], 'string'],
-            [['name', 'short_description', 'upload_image'], 'string', 'max' => 255],
+            [['name', 'description', 'image'], 'string', 'max' => 255],
 
         ];
     }
@@ -63,15 +56,15 @@ class News extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels():array
     {
         return [
             'id' => 'ID',
             'author_id' => 'Author ID',
             'name' => 'Name',
-            'short_description' => 'Short Description',
+            'description' => 'Short Description',
             'text' => 'Text',
-            'upload_image' => 'Upload Image',
+            'image' => 'Upload Image',
             'status' => 'Status',
             'visits' => 'Visits',
             'categories_id' => 'categoriesId',
@@ -81,25 +74,32 @@ class News extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+
+    public function getCategory():array
     {
         return $this->hasOne(Categories::class, ['id' => 'categories_id']);
     }
 
-    public static function selectNews($id): array
+    /**
+     * @return News[]
+     */
+    public static function getNews(): array
     {
-        if ($id === null) {
-            return static::find()->all();
-        } else {
-
-            return static::find()->where(['id' => $id])->all();
-        }
+        return static::find()->all();
     }
 
-    public static function getCategoryNews($category)
+    public static function getNew(int $id): self
     {
-        return static::find()->where(['categories_id' => $category])->all();
+        return static::findOne($id);
     }
 
+    public static function deleteNew(int $id): bool
+    {
+        return (bool)static::deleteAll($id);
+    }
+
+    public static function setNews()
+    {
+
+    }
 }
-

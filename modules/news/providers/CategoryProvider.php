@@ -9,6 +9,8 @@ use app\modules\news\models\News;
 
 class CategoryProvider
 {
+
+
     public function getCategoryName(): array
     {
         return Categories::getCategoryName();
@@ -16,7 +18,6 @@ class CategoryProvider
 
     public function getCategoryNews($category)
     {
-        $categoriesNews = new News();
-        return $categoriesNews->getCategoryNews($category);
+        return News::getCategoryNews($category);
     }
 }

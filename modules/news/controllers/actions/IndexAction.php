@@ -16,7 +16,6 @@ class IndexAction extends Action
         /**
          * @var CategoryProvider $newsProvider
          */
-
         parent::__construct($id, $module);
         $this->categoryProvider = $categoryProvider;
     }

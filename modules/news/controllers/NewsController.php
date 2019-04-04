@@ -2,7 +2,6 @@
 
 namespace app\modules\news\controllers;
 
-
 use yii\web\Controller;
 
 class NewsController extends Controller
@@ -13,8 +12,9 @@ class NewsController extends Controller
     {
         $actions = parent::actions();
         $actions ['index'] = ['class' => 'app\modules\news\controllers\actions\IndexAction'];
-        $actions ['editor'] = ['class' => 'app\modules\news\controllers\actions\CreateNewsAction'];
+//        $actions ['editor'] = ['class' => 'app\modules\news\controllers\actions\CreateNewsAction'];
         $actions ['view'] = ['class' => 'app\modules\news\controllers\actions\ViewNewsAction'];
+        $actions ['delete'] = ['class' => 'app\modules\news\controllers\actions\ViewNewsAction'];
         return $actions;
     }
 

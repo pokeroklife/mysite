@@ -1,12 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Романенко
- * Date: 25.03.2019
- * Time: 19:24
- */
+declare(strict_types=1);
 
-namespace app\modules\news\models;
+namespace app\modules\blog\models;
 
 
 use yii\base\Model;

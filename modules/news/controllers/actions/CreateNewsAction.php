@@ -11,9 +11,8 @@ class CreateNewsAction extends Action
     {
         $model = new NewsCreateForm();
 
-        if ($model->load(\Yii::$app->request->post()) && ($info = $model->insertNews())) {
+        if ($model->load(\Yii::$app->request->post()) && ($model->insertNews())) {
             \Yii::$app->session->setFlash('success', 'Статья сохранена');
-            return $this->controller->render('createNews', compact('model'));
         }
         return $this->controller->render('createNews', compact('model'));
     }

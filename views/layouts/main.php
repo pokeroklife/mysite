@@ -56,7 +56,7 @@ AppAsset::register($this);
             . '</li>';
     } else if (Yii::$app->user->can('userRight')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-         $menuItems[] = ['label' => 'News', 'url' => ['/news/news/']];
+         $menuItems[] = ['label' => 'News', 'url' => ['/blog/news/']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

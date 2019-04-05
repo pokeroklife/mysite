@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\modules\news\models\Categories;
+use \app\modules\blog\models\Categories;
 
 $this->title = 'Создание новой новости';
 $this->params['breadcrumbs'][] = $this->title;
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <p>Пожалуйста заполните поля ниже для создания новости</p>
     <div class="row">
-        <h3><?= Yii::$app->session->getFlash('success'); ?></h3>
+
         <div class="news_form">
             <?php $form = ActiveForm::begin([
                 'id' => 'form-create',
@@ -24,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'enctype' => 'multipart/form-data'
                     ]
             ]); ?>
-            <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map(Categories::getCategoryName(), 'id',
+            <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map(Categories::getCategories(), 'id',
                 'name')) ?>
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
-            <?= $form->field($model, 'uploadImage')->fileInput() ?>
-            <?= $form->field($model, 'newsDescription')->textInput(['autofocus' => true]) ?>
-            <?= $form->field($model, 'newsText')->textarea(['autofocus' => true]) ?>
-            <?= $form->field($model, 'newsStatus')->radioList([
+            <?= $form->field($model, 'image')->fileInput() ?>
+            <?= $form->field($model, 'description')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'text')->textarea(['autofocus' => true]) ?>
+            <?= $form->field($model, 'status')->radioList([
                 1 => 'Да',
                 0 => 'Нет, поместить в архив'
             ])->label('Разместить статью на сайте?') ?>

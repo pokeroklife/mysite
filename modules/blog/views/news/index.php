@@ -6,10 +6,12 @@ $this->title = 'Новости';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
 <h2>Новости по категориям:</h2>
 <?= Html::a('Категории Новостей', ['/blog/categories/']) ?>
+<h3><?= Yii::$app->session->getFlash('success'); ?></h3>
 <h3>Все новости:</h3>
-<?php foreach ($news as $model): ?>
+<?php foreach ($models as $model): ?>
 
     <div class="card">
         <h5><?= Html::encode($model->name) ?></h5>

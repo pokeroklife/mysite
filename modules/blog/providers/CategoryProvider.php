@@ -25,4 +25,9 @@ class CategoryProvider
     {
         return Categories::deleteCategory($id);
     }
+
+    public function setCategory(object $model):bool
+    {
+        return Categories::setCategory($model);
+    }
 }

@@ -22,7 +22,8 @@ class ViewAction extends Action
 
     public function run(int $id): string
     {
-        $new = $this->NewsProvider->getNew($id);
-        return $this->controller->render('view', compact('new'));
+        $model = $this->NewsProvider->getArticle($id);
+
+        return $this->controller->render('view', compact('model'));
     }
 }

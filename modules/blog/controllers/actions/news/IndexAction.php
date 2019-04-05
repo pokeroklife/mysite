@@ -25,8 +25,8 @@ class IndexAction extends Action
 
     public function run(): string
     {
-        $news = $this->newsProvider->getNews();
+        $models = $this->newsProvider->getNews();
 
-        return $this->controller->render('index', compact('news'));
+        return $this->controller->render('index', compact('models'));
     }
 }

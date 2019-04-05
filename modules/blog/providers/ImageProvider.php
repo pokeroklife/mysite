@@ -1,15 +1,26 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Романенко
- * Date: 04.04.2019
- * Time: 09:25
- */
+declare(strict_types=1);
 
 namespace app\modules\blog\providers;
 
+use yii\base\Model;
+use yii\imagine\Image;
+use yii\web\UploadedFile;
 
 class ImageProvider
 {
+    public function upload(Model $model): ?string
+    {
 
+        if (empty($file = UploadedFile::getInstance($model, 'image'))) {
+
+            return null;
+        }
+        $aliasImage = "@webroot/img/{$file->baseName}.{$file->extension}";
+        $aliasSmallImage = "@webroot/img/small/$file->baseName.$file->extension";
+        $file->saveAs(\Yii::getAlias($aliasImage));
+        Image::thumbnail($aliasImage, 100, 60)
+            ->save(\Yii::getAlias($aliasSmallImage), ['quality' => 100]);
+        return "{$file->baseName}.{$file->extension}";
+    }
 }

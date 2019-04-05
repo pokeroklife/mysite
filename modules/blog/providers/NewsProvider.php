@@ -1,10 +1,11 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace app\modules\blog\providers;
 
 use app\modules\blog\models\News;
-use app\modules\blog\models\NewsForm;
+use app\modules\blog\models\NewsCreateForm;
+use yii\db\ActiveRecord;
 
 class NewsProvider
 {
@@ -16,24 +17,28 @@ class NewsProvider
         return News::getNews();
     }
 
-    public function getNew(int $id): News
+    public function getArticle(int $id): ?ActiveRecord
     {
-        return News::getNew($id);
+        return News::getArticle($id);
     }
 
-    public function deleteNew(int $id): bool
+    public function deleteArticle(int $id): bool
     {
-        return News::deleteNew($id);
+        return News::deleteArticle($id);
     }
 
-    public function setNews()
+    public function setNews(NewsCreateForm $model): ?News
     {
+        $article = new News([
+            'categories_id' => $model->categories,
+            'author_id' => $model->authorId,
+            'name' => $model->name,
+            'description' => $model->description,
+            'text' => $model->text,
+            'image' => $model->image,
+            'status' => $model->status,
+        ]);
 
-    }
-
-    public function getModel()
-    {
-        $news = new NewsForm();
-
+        return $article->save() ? $article : null;
     }
 }

@@ -1,10 +1,12 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "news".
@@ -27,7 +29,7 @@ class News extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName():string
+    public static function tableName(): string
     {
         return 'news';
     }
@@ -42,7 +44,7 @@ class News extends \yii\db\ActiveRecord
         ];
     }
 
-    public function rules():array
+    public function rules(): array
     {
         return [
             [['name', 'description', 'text', 'categories_id'], 'required'],
@@ -56,7 +58,7 @@ class News extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels():array
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -74,8 +76,7 @@ class News extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-
-    public function getCategory():array
+    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(Categories::class, ['id' => 'categories_id']);
     }
@@ -88,18 +89,17 @@ class News extends \yii\db\ActiveRecord
         return static::find()->all();
     }
 
-    public static function getNew(int $id): self
+    public static function getArticle(int $id): ?ActiveRecord
     {
-        return static::findOne($id);
+        return static::find()
+            ->where(['id' => $id])
+            ->with('category')
+            ->one();
     }
 
-    public static function deleteNew(int $id): bool
-    {
-        return (bool)static::deleteAll($id);
-    }
-
-    public static function setNews()
+    public static function deleteArticle(int $id): bool
     {
 
+        return (bool)static::deleteAll(['id' => $id]);
     }
 }

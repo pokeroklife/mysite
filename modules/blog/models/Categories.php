@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "categories".
@@ -27,11 +28,18 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
+    public function behaviors(): array
+    {
+        return [
+            'class' => TimestampBehavior::class,
+        ];
+    }
+
     public function rules(): array
     {
         return [
-            [['name', 'created_at', 'updated_at'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['name'], 'required'],
+            [['status'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -43,10 +51,8 @@ class Categories extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'name' => 'Имя Категории',
+            'status' => 'Статус',
         ];
     }
 
@@ -68,7 +74,15 @@ class Categories extends \yii\db\ActiveRecord
 
     public static function deleteCategory(int $id): bool
     {
-        return (bool)static::deleteAll($id);
+        return (bool)static::deleteAll(['id' => $id]);
+    }
+
+    public static function setCategory(object $model): bool
+    {
+        $category = new Categories();
+        $category->name = $model->name;
+        $category->status = $model->status;
+        return $category->save();
     }
 }
 

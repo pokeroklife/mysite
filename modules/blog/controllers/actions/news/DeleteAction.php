@@ -23,7 +23,8 @@ class DeleteAction extends Action
 
     public function run(int $id): Response
     {
-        if ($this->newsProvider->deleteNew($id)) {
+
+        if ($this->newsProvider->deleteArticle($id)) {
             \Yii::$app->session->setFlash('success', 'success');
             return $this->controller->redirect('index');
         }

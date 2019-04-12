@@ -23,7 +23,7 @@ class CreateAction extends Action
         $model = new CategoriesCreateForm();
         if ($model->load(\Yii::$app->request->post())
             && $model->validate()
-            && $this->categoriesProvider->setCategory($model)) {
+            && $this->categoriesProvider->createCategory($model)) {
             \Yii::$app->session->setFlash('success', 'Категория сохранена');
         }
         return $this->controller->render('create', compact('model'));

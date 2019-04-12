@@ -12,6 +12,8 @@ class NewsCreateForm extends Model
 
     public $categories;
 
+    public $tags ;
+
     public $name;
 
     public $description;
@@ -31,7 +33,7 @@ class NewsCreateForm extends Model
     public function rules(): array
     {
         return [
-            [['categories', 'name', 'description', 'text', 'status'], 'required'],
+            [['categories', 'name', 'description', 'text', 'status', 'tags'], 'required'],
             [['image'], 'required', 'message' => 'Картинка отсутствует'],
             [['name', 'description', 'text'], 'string', 'min' => 5],
             [['imagePath'], 'string'],
@@ -57,6 +59,7 @@ class NewsCreateForm extends Model
             'text' => 'Текст новости',
             'status' => 'Статус новости',
             'image' => 'Изображение новости',
+            'tags' => 'Метки',
 
         ];
     }

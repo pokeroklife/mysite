@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
     ]) ?>
     <div>
-        If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+        If you forgot your password you can <?= Html::a('reset it', ['site/passwordResetRequest']) ?>.
     </div>
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">

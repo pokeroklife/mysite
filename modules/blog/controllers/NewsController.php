@@ -9,8 +9,6 @@ use yii\web\Controller;
 
 class NewsController extends Controller
 {
-    public $layout = 'newsLayout';
-
     public function behaviors(): array
     {
         return [

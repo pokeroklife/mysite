@@ -31,3 +31,17 @@
     padding: 30px;
 
 }
+.comment_user_name {
+    font-style: italic;
+    margin-top: 15px;;
+    margin-bottom: 0;
+}
+
+.comment {
+    border: 1px solid black;
+    font-family: cursive;
+}
+.comment_date {
+    margin: 0;
+    color: lightgrey;
+}

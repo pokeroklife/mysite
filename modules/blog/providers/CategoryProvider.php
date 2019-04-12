@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\modules\blog\providers;
 
 use app\modules\blog\models\Categories;
+use app\modules\blog\models\CategoriesCreateForm;
 
 
 class CategoryProvider
@@ -26,8 +27,12 @@ class CategoryProvider
         return Categories::deleteCategory($id);
     }
 
-    public function setCategory(object $model):bool
+    public function createCategory(CategoriesCreateForm $model): bool
     {
-        return Categories::setCategory($model);
+        return Categories::createCategory($model);
     }
+
+
+
+
 }

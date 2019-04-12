@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
-use Yii;
 use yii\base\Model;
 
 /**
@@ -15,12 +15,12 @@ class SignupForm extends Model
     public $email;
     public $password;
     public $id;
-//    public $verifyCode;
+    public $verifyCode;
 
     /**
      * @inheritdoc
      */
-    public function rules():array
+    public function rules(): array
     {
         return [
             ['username', 'trim'],
@@ -44,31 +44,15 @@ class SignupForm extends Model
             ],
             ['password', 'required'],
             ['password', 'string', 'min' => 2],
-//            ['verifyCode', 'captcha'],
+            ['verifyCode', 'captcha'],
         ];
     }
 
-    public function attributeLabels():array
+    public function attributeLabels(): array
     {
         return [
             'verifyCode' => 'Verification Code',
         ];
-    }
-
-    public function signup():object
-    {
-
-        if (!$this->validate()) {
-            return null;
-        }
-
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-
-        return $user->save() ? $user : null;
     }
 
 }

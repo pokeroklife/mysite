@@ -17,7 +17,7 @@ class NewsProvider
         return News::getNews();
     }
 
-    public function getArticle(int $id): ?ActiveRecord
+    public function getArticle(int $id): ActiveRecord
     {
         return News::getArticle($id);
     }
@@ -27,7 +27,7 @@ class NewsProvider
         return News::deleteArticle($id);
     }
 
-    public function setNews(NewsCreateForm $model): ?News
+    public function createArticle(NewsCreateForm $model): ?News
     {
         $article = new News([
             'categories_id' => $model->categories,
@@ -41,4 +41,5 @@ class NewsProvider
 
         return $article->save() ? $article : null;
     }
+
 }

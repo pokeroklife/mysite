@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Романенко
- * Date: 24.03.2019
- * Time: 21:23
- */
+declare(strict_types=1);
 
 namespace app\controllers\actions;
 
@@ -15,18 +10,18 @@ use yii\base\Action;
 
 class ResetPasswordAction extends Action
 {
-    public function run($token)
+    public function run($token): string
     {
         try {
             $model = new ResetPasswordForm($token);
         } catch (\InvalidArgumentException $exception) {
             \Yii::$app->session->setFlash('success', $exception->getMessage());
-            return $this->controller->goHome();
+            return $this->controller->render('index');
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
             Yii::$app->session->setFlash('success', 'New password was saved.');
-            return $this->controller->goHome();
+            return $this->controller->render('index');
         }
 
         return $this->controller->render('resetPassword', [

@@ -2,10 +2,13 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\modules\news\models\Categories;
+
 
 $this->title = 'Создание новой Категории';
+$this->params['breadcrumbs'][] = array(
+    'label' => 'Создание статьи',
+    'url' => \yii\helpers\Url::toRoute('/blog/news/create')
+);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-signup">

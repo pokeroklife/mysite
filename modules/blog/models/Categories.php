@@ -70,6 +70,7 @@ class Categories extends \yii\db\ActiveRecord
     public static function getCategories(): array
     {
         return static::find()->select(['id', 'name'])->all();
+
     }
 
     public static function deleteCategory(int $id): bool
@@ -77,7 +78,7 @@ class Categories extends \yii\db\ActiveRecord
         return (bool)static::deleteAll(['id' => $id]);
     }
 
-    public static function setCategory(object $model): bool
+    public static function createCategory(CategoriesCreateForm $model): bool
     {
         $category = new Categories();
         $category->name = $model->name;

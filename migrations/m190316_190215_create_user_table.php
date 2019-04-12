@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use yii\db\Migration;
 
@@ -14,15 +15,15 @@ class m190316_190215_create_user_table extends Migration
         }
 
         $this->createTable('user', [
-            'id' => $this->primaryKey(),
-            'username' => $this->string()->notNull()->unique(),
+            'id' => $this->primaryKey(11),
+            'username' => $this->string(255)->notNull()->unique(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'email' => $this->string()->notNull()->unique(),
-            'status' => $this->smallInteger()->notNull()->defaultValue(10),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'status' => $this->tinyInteger()->unsigned()->notNull()->defaultValue(10),
+            'created_at' => $this->timestamp()->notNull(),
+            'updated_at' => $this->timestamp()->notNull(),
         ], $tableOptions);
     }
 

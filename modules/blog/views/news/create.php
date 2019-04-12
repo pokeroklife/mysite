@@ -24,8 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'enctype' => 'multipart/form-data'
                     ]
             ]); ?>
-            <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map(Categories::getCategories(), 'id',
+            <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id',
                 'name')) ?>
+            <?= Html::a('Создать новую категорию', ['./categories/create']) ?>
+            <?= $form->field($model, 'tags')
+                ->checkboxList(ArrayHelper::map($tags, 'id',
+                    'name')); ?>
+            <?= Html::a('Создать новый тэг', ['./tags/create']) ?>
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
             <?= $form->field($model, 'image')->fileInput() ?>
             <?= $form->field($model, 'description')->textInput(['autofocus' => true]) ?>

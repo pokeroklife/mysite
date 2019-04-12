@@ -89,7 +89,7 @@ class News extends \yii\db\ActiveRecord
         return static::find()->all();
     }
 
-    public static function getArticle(int $id): ?ActiveRecord
+    public static function getArticle(int $id): ActiveRecord
     {
         return static::find()
             ->where(['id' => $id])
@@ -99,7 +99,18 @@ class News extends \yii\db\ActiveRecord
 
     public static function deleteArticle(int $id): bool
     {
-
         return (bool)static::deleteAll(['id' => $id]);
     }
+
+    public function getComment(): ActiveQuery
+    {
+        return $this->hasMany(Comment::class, ['news_id' => 'id']);
+    }
+
+    public function getTag(): ActiveQuery
+    {
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('news_tag', ['news_id' => 'id']);
+    }
+
+
 }

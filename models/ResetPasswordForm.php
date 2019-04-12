@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
-use yii\base\InvalidParamException;
 
 /**
  * Password reset form
@@ -44,7 +44,7 @@ class ResetPasswordForm extends Model
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             ['password', 'required'],
@@ -57,7 +57,7 @@ class ResetPasswordForm extends Model
      *
      * @return bool if password was reset.
      */
-    public function resetPassword()
+    public function resetPassword(): bool
     {
         $user = $this->_user;
         $user->setPassword($this->password);

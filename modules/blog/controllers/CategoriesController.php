@@ -9,8 +9,6 @@ use yii\web\Controller;
 
 class CategoriesController extends Controller
 {
-    public $layout = 'newsLayout';
-
     public function behaviors(): array
     {
         return [

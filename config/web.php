@@ -14,8 +14,8 @@ $config = [
     ],
     'layout' => 'main',
     'modules' => [
-        'news' => [
-            'class' => 'app\modules\news\News',
+        'shop' => [
+            'class' => 'app\modules\shop\Shop',
         ],
         'admin' => [
             'class' => 'app\modules\admin\Admin',
@@ -37,9 +37,9 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'a5FYmgcw-q6_gyfMYAq1hC0tllQpx2ZR',
         ],
-//            'cache' => [
-//                'class' => 'yii\caching\FileCache',
-//        ],
+            'cache' => [
+                'class' => 'yii\caching\FileCache',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],

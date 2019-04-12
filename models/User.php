@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\models;
 
@@ -14,26 +15,28 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
-    public static function tableName()
+    public static function tableName(): string
     {
-        return '{{%user}}';
+        return 'user';
     }
 
-    public function behaviors()
+    public function behaviors(): array
     {
         $this->on(ActiveRecord::EVENT_AFTER_INSERT, [$this, 'setRole']);
+
         return [
             'timestamp' => [
-            'class' => TimestampBehavior::class,
+                'class' => TimestampBehavior::class,
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
                     ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
                 ],
                 'value' => new Expression('NOW()'),
-        ]];
+            ]
+        ];
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
@@ -41,7 +44,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'email' => 'Почта',
@@ -50,7 +53,7 @@ class User extends ActiveRecord implements IdentityInterface
         ];
     }
 
-    public static function findIdentity($id)
+    public static function findIdentity($id): self
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
@@ -60,12 +63,12 @@ class User extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
-    public static function findByUsername($username)
+    public static function findByUsername($username): self
     {
         return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
     }
 
-    public static function findByPasswordResetToken($token)
+    public static function findByPasswordResetToken($token): self
     {
 
         if (!static::isPasswordResetTokenValid($token)) {
@@ -94,17 +97,17 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->getPrimaryKey();
     }
 
-    public function getAuthKey()
+    public function getAuthKey(): string
     {
         return $this->auth_key;
     }
 
-    public function validateAuthKey($authKey)
+    public function validateAuthKey($authKey): bool
     {
         return $this->getAuthKey() === $authKey;
     }
 
-    public function validatePassword($password)
+    public function validatePassword($password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
@@ -129,7 +132,7 @@ class User extends ActiveRecord implements IdentityInterface
         $this->password_reset_token = null;
     }
 
-    public static function findByEmail($email)
+    public static function findByEmail($email): self
     {
         return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
     }
@@ -139,4 +142,23 @@ class User extends ActiveRecord implements IdentityInterface
         $userRole = Yii::$app->authManager->getRole('user');
         Yii::$app->authManager->assign($userRole, $this->owner->id);
     }
+
+    public static function signUp(SignupForm $model): ?User
+    {
+        if (!$model->validate()) {
+            return null;
+        }
+
+        $user = new User(
+            [
+                'username' => $model->username,
+                'email' => $model->email,
+            ]
+        );
+        $user->setPassword($model->password);
+        $user->generateAuthKey();
+
+        return $user->save() ? $user : null;
+    }
+
 }

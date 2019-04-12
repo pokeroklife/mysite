@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace app\modules\blog\models;
 
 use yii\base\Model;
-use yii\web\UploadedFile;
+
 
 class CategoriesCreateForm extends Model
 {

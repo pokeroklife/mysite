@@ -25,32 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     <?php endif; ?>
 </div>
-<?= \app\components\Comments::widget(['commentForm' => $commentForm, 'label' => 'Отсавить комментарий', 'buttonName' => 'Оставить комментарий']) ?>
-<?php foreach ($comments as $comment): ?>
-    <ul>
-        <li>
-            <?= Html::tag('p', Html::encode($comment['username']), ['class' => 'comment_user_name']) ?>
-            <?= Html::tag('p', Html::encode($comment['created_at']), ['class' => 'comment_date']) ?>
-            <?= Html::tag('div', Html::tag('p', Html::encode($comment['comment'])), ['class' => 'comment']) ?>
-        </li>
-        <ul>
-            <?php
-            if (is_array($comment['childs'])): ?>
-            <?php foreach ($comment['childs'] as $answer): ?>
-                <li>
-                    <?= Html::tag('p', Html::encode($answer['username']), ['class' => 'comment_user_name']) ?>
-                    <?= Html::tag('p', Html::encode($answer['created_at']), ['class' => 'comment_date']) ?>
-                    <?= Html::tag('div', Html::tag('p', Html::encode($answer['comment'])),
-                        ['class' => 'comment']) ?>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-        <?php endif; ?>
-
-        <?= \app\components\Comments::widget(['commentForm' => $commentForm, 'commentId' => $comment['id'], 'buttonName' => 'Ответить на коментарий']) ?>
-
-    </ul>
-<?php endforeach; ?>
+<?= \app\widgets\CommentsWithAnswerField::widget([
+    'commentForm' => $commentForm,
+    'comments' => $comments,
+]) ?>
 
 
 

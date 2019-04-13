@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace app\components;
+namespace app\widgets;
 
 use yii\base\Widget;
 
@@ -30,6 +30,6 @@ class Comments extends Widget
             'label' => $this->label,
             'buttonName' => $this->buttonName,
 
-            ]));
+        ]));
     }
 }

@@ -11,9 +11,7 @@ class CommentsProvider
     public function getComment(int $id): array
     {
         $comments = Comment::getComment($id);
-
         $transformComments = $this->transformComments($comments);
-
         return $tree = $this->buildCommentTree($transformComments);
 
 //        return $this->commentCollection($tree);
@@ -32,7 +30,7 @@ class CommentsProvider
 
     public function buildCommentTree($data): array
     {
-        $tree = array();
+        $tree = [];
         foreach ($data as $id => &$row) {
             if (empty($row['parent_id'])) {
                 $tree[$id] = &$row;
@@ -46,7 +44,7 @@ class CommentsProvider
 
     public function transformComments(array $comments): array
     {
-        $transformComments = array();
+        $transformComments = [];
         foreach ($comments as $comment) {
             $transformComments[$comment['id']] = $comment;
         }

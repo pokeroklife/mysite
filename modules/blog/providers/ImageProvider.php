@@ -12,7 +12,7 @@ class ImageProvider
     public function upload(Model $model): ?string
     {
 
-        if (empty($file = UploadedFile::getInstance($model, 'image'))) {
+        if (($file = UploadedFile::getInstance($model, 'image')) === null) {
 
             return null;
         }

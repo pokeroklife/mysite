@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace app\modules\blog\controllers;
 
+use app\modules\blog\controllers\actions\comment\DeleteAction;
 use \yii\web\Controller;
+use app\modules\blog\controllers\actions\comment\CreateAction;
 
 class CommentController extends Controller
 {
@@ -34,8 +36,8 @@ class CommentController extends Controller
     public function actions(): array
     {
         $action = parent::actions();
-        $action['delete'] = ['class' => 'app\modules\blog\controllers\actions\comment\DeleteAction'];
-        $action['create'] = ['class' => 'app\modules\blog\controllers\actions\comment\CreateAction'];
+        $action['delete'] = ['class' => DeleteAction::class];
+        $action['create'] = ['class' => CreateAction::class];
 
         return $action;
     }

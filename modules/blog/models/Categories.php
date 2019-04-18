@@ -80,7 +80,7 @@ class Categories extends \yii\db\ActiveRecord
 
     public static function createCategory(CategoriesCreateForm $model): bool
     {
-        $category = new Categories();
+        $category = new self();
         $category->name = $model->name;
         $category->status = $model->status;
         return $category->save();

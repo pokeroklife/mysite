@@ -28,11 +28,12 @@ class ViewAction extends Action
     public function run(int $id): string
     {
 
-        $model = $this->newsProvider->getArticle($id);
+        $model = $this->newsProvider->getArticleCategory($id);
         $comments = $this->commentProvider->getComment($id);
+        $tags = $this->newsProvider->getArticleTags($id);
         $commentForm = new CommentForm();
         \Yii::$app->session->set('newsId', $id);
         return $this->controller->render('view',
-            compact('model', 'comments', 'commentForm'));
+            compact('model', 'comments', 'commentForm', 'tags'));
     }
 }

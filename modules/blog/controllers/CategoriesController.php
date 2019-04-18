@@ -3,6 +3,10 @@ declare(strict_types = 1);
 
 namespace app\modules\blog\controllers;
 
+use app\modules\blog\controllers\actions\categories\CreateAction;
+use app\modules\blog\controllers\actions\categories\DeleteAction;
+use app\modules\blog\controllers\actions\categories\IndexAction;
+use app\modules\blog\controllers\actions\categories\ViewAction;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -42,10 +46,10 @@ class CategoriesController extends Controller
     public function actions(): array
     {
         $actions = parent::actions();
-        $actions ['index'] = ['class' => 'app\modules\blog\controllers\actions\categories\IndexAction'];
-        $actions ['view'] = ['class' => 'app\modules\blog\controllers\actions\categories\ViewAction'];
-        $actions ['delete'] = ['class' => 'app\modules\blog\controllers\actions\categories\DeleteAction'];
-        $actions ['create'] = ['class' => 'app\modules\blog\controllers\actions\categories\CreateAction'];
+        $actions ['index'] = ['class' => IndexAction::class];
+        $actions ['view'] = ['class' => ViewAction::class];
+        $actions ['delete'] = ['class' => DeleteAction::class];
+        $actions ['create'] = ['class' => CreateAction::class];
 
         return $actions;
     }

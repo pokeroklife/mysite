@@ -6,7 +6,7 @@ use yii\db\Migration;
 /**
  * Class m190321_104417_news_category_author
  */
-class m190321_104417_news_category_author extends Migration
+class m190321_104417_news_category extends Migration
 {
     public function safeUp()
     {
@@ -42,7 +42,7 @@ class m190321_104417_news_category_author extends Migration
     /**
      * {@inheritdoc}
      */
-    public function safeDown()
+    public function safeDown(): bool
     {
         echo "m190321_104417_news_category_author cannot be reverted.\n";
 

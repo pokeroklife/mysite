@@ -45,19 +45,21 @@ class CreateAction extends Action
             $model->image = $this->imageProvider->upload($model);
 
             if ($model->validate()
-                && ($news = $this->newsProvider->createArticle($model)) !== null
-                && $this->tagsProvider->createRelationArticleTags($model, $news)) {
+                && ($this->newsProvider->createArticle($model) !== null)
+            ) {
 
                 \Yii::$app->session->setFlash('success', 'Статья сохранена');
-            } else {
-                \Yii::$app->session->setFlash('success', 'Статья не сохранена');
+                return $this->controller->redirect('create');
             }
-        }
+            \Yii::$app->session->setFlash('success', 'Статья не сохранена');
 
+        }
         return $this->controller->render('create',
             compact(
                 'model',
                 'categories',
-                'tags'));
+                'tags'
+            )
+        );
     }
 }

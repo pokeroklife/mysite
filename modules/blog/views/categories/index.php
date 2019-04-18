@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use \yii\helpers\Html;
 
@@ -13,7 +14,7 @@ foreach ($categories as $category) {
             ],
         ]);
     }
-    echo \yii\helpers\Html::tag('div', $view .$delete, ['class' => 'categories']);
+    echo \yii\helpers\Html::tag('div', $view . $delete, ['class' => 'categories']);
 }
 
 

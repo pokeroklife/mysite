@@ -33,9 +33,9 @@ class IndexAction extends Action
             $models = $this->newsProvider->getNews();
             $tags = $this->tagsProvider->getTags();
             return $this->controller->render('index', compact('models', 'tags'));
-        } else {
+        }
             $models = $this->tagsProvider->getNewsWithTag($tagId);
             return $this->controller->render('index', compact('models'));
-        }
+
     }
 }

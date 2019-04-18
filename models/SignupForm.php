@@ -28,7 +28,7 @@ class SignupForm extends Model
             [
                 'username',
                 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => User::class,
                 'message' => 'This username has already been taken.'
             ],
             ['username', 'string', 'min' => 2, 'max' => 255],
@@ -39,7 +39,7 @@ class SignupForm extends Model
             [
                 'email',
                 'unique',
-                'targetClass' => '\app\models\User',
+                'targetClass' => User::class,
                 'message' => 'This email address has already been taken.'
             ],
             ['password', 'required'],

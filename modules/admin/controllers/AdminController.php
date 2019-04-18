@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin\controllers;
 
@@ -8,16 +9,15 @@ use app\modules\admin\AuthAssignmentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\Response;
 
 class AdminController extends Controller
 {
-
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -25,7 +25,7 @@ class AdminController extends Controller
         ];
     }
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new AuthAssignmentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -36,7 +36,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function actionView($item_name, $user_id)
+    public function actionView($item_name, $user_id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($item_name, $user_id),
@@ -69,7 +69,7 @@ class AdminController extends Controller
         ]);
     }
 
-    public function actionDelete($item_name, $user_id)
+    public function actionDelete($item_name, $user_id): Response
     {
         $this->findModel($item_name, $user_id)->delete();
 
@@ -77,7 +77,7 @@ class AdminController extends Controller
     }
 
 
-    protected function findModel($item_name, $user_id)
+    protected function findModel($item_name, $user_id): AuthAssignment
     {
         if (($model = AuthAssignment::findOne(['item_name' => $item_name, 'user_id' => $user_id])) !== null) {
             return $model;

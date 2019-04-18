@@ -12,9 +12,7 @@ class CommentsProvider
     {
         $comments = Comment::getComment($id);
         $transformComments = $this->transformComments($comments);
-        return $tree = $this->buildCommentTree($transformComments);
-
-//        return $this->commentCollection($tree);
+        return $this->buildCommentTree($transformComments);
     }
 
     public function createComment(CommentForm $model): bool
@@ -28,6 +26,7 @@ class CommentsProvider
         return $comment->save();
     }
 
+
     public function buildCommentTree($data): array
     {
         $tree = [];
@@ -39,7 +38,6 @@ class CommentsProvider
             }
         }
         return $tree;
-
     }
 
     public function transformComments(array $comments): array
@@ -52,20 +50,9 @@ class CommentsProvider
         return $transformComments;
     }
 
-//    public function commentCollection(array $tree): object
-//    {
-//        $commentCollection = new \stdClass();
-//        if (isset($tree['childs'])) {
-//            foreach ($tree as $key => $value) {
-//                $commentCollection->$key = $this->commentCollection($value);
-//            }
-//        } else {
-//            foreach ($tree as $key => $value) {
-//                $commentCollection->$key = (object)$value;
-//            }
-//        }
-//
-//        return (object)$commentCollection;
-//    }
+    public function deleteComment(int $commentId): bool
+    {
+        return Comment::deleteComment($commentId);
+    }
 
 }

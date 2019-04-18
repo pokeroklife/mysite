@@ -18,7 +18,7 @@ use yii\db\Expression;
  * @property string $comment
  * @property string $created_at
  *
- * @property Comments[] $comments
+ * @property Comment[] $comments
  */
 class Comment extends ActiveRecord
 {
@@ -81,7 +81,15 @@ class Comment extends ActiveRecord
 
     public static function getComment(int $id): array
     {
-        return static::find()->where(['news_id' => $id])->orderBy('created_at')->asArray()->all();
+        return static::find()
+            ->where(['news_id' => $id])
+            ->orderBy('created_at')
+            ->asArray()
+            ->all();
     }
 
+    public static function deleteComment(int $id): bool
+    {
+        return (bool)static::deleteAll(['id' => $id]);
+    }
 }

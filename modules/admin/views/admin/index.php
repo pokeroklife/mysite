@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -23,13 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => \yii\grid\SerialColumn::class],
 
             'item_name',
             'user_id',
             'created_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => \yii\grid\ActionColumn::class],
         ],
-    ]); ?>
+    ]) ?>
 </div>

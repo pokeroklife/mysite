@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -7,15 +8,13 @@ use \app\modules\blog\models\Categories;
 
 $this->title = 'Создание новой новости';
 $this->params['breadcrumbs'][] = $this->title;
-
-
 ?>
-<div class="site-signup">
+<div class="site-create-news">
     <h1><?= Html::encode($this->title) ?></h1>
     <p>Пожалуйста заполните поля ниже для создания новости</p>
     <div class="row">
 
-        <div class="news_form">
+        <div class="news-create-form">
             <?php $form = ActiveForm::begin([
                 'id' => 'form-create',
                 'method' => 'post',
@@ -27,10 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id',
                 'name')) ?>
             <?= Html::a('Создать новую категорию', ['./categories/create']) ?>
+
             <?= $form->field($model, 'tags')
-                ->checkboxList(ArrayHelper::map($tags, 'id',
-                    'name')); ?>
-            <?= Html::a('Создать новый тэг', ['./tags/create']) ?>
+                ->widget(\kartik\select2\Select2::class, [
+                    'data' => ArrayHelper::map($tags, 'name',
+                        'name'),
+                    'options' => ['placeholder' => 'Select a tag ...', 'multiple' => true],
+                    'pluginOptions' => [
+                        'tags' => true,
+                        'tokenSeparators' => [',', ' '],
+                        'maximumInputLength' => 10
+                    ],
+                ]) ?>
+
             <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
             <?= $form->field($model, 'image')->fileInput() ?>
             <?= $form->field($model, 'description')->textInput(['autofocus' => true]) ?>
@@ -45,7 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="form-group">
                 <?= Html::submitButton('News', ['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
             </div>
-            <?php ActiveForm::end(); ?>
+            <?php ActiveForm::end() ?>
 
         </div>
     </div>

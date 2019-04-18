@@ -11,7 +11,7 @@ use yii\helpers\Html;
     ]
 );
 ?>
-<?= $form->field($commentForm, 'comment')->textInput(['autofocus' => true])->label($label); ?>
+<?= $form->field($commentForm, 'comment')->textInput(['autofocus' => true])->label($label) ?>
 <?= Html::activeHiddenInput($commentForm, 'parentId', ['value' => $commentId]) ?>
     <div class="form-group">
         <?= Html::submitButton($buttonName, ['class' => 'answer_button', 'name' => 'answer-button']) ?>

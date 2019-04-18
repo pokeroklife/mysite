@@ -1,0 +1,41 @@
+/* phpNT CSS file*/
+.navbar.navbar-brand {
+    color: rgba(0, 0, 0, 1);
+}
+.navbar {
+    font-size: 20px;
+    background-color: rgba(176, 178, 252, 1);
+    border-width: 2px;
+    border-radius: 0px;
+
+}
+
+.navbar .navbar-nav>li>a {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(176, 178, 252, 1);
+}
+.navbar .navbar-nav>li>a:hover,
+.navbar.navbar-default .navbar-nav>li>a:focus {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(71, 181, 209, 1);
+}
+.navbar .navbar-nav>.active>a,
+.navbar .navbar-nav>.active>a:hover,
+.navbar .navbar-nav>.active>a:focus {
+    color: rgba(0, 0, 0, 1);
+    background-color: rgba(245, 245, 231, 1);
+}
+.navbar .navbar-toggle {
+    border-color: #f5f5e7;
+}
+.navbar .navbar-toggle:hover,
+.navbar .navbar-toggle:focus {
+    background-color: #f5f5e7;
+}
+.navbar .navbar-toggle .icon-bar {
+    background-color: #f5f5e7;
+}
+.navbar .navbar-toggle:hover .icon-bar,
+.navbar .navbar-toggle:focus .icon-bar {
+    background-color: #b0b2fc;
+}

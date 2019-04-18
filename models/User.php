@@ -109,22 +109,30 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function validatePassword($password): bool
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app
+            ->security
+            ->validatePassword($password, $this->password_hash);
     }
 
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password_hash = Yii::$app
+            ->security
+            ->generatePasswordHash($password);
     }
 
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        $this->auth_key = Yii::$app
+            ->security
+            ->generateRandomString();
     }
 
     public function generatePasswordResetToken()
     {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        $this->password_reset_token = Yii::$app
+                ->security
+                ->generateRandomString() . '_' . time();
     }
 
     public function removePasswordResetToken()
@@ -139,8 +147,12 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function setRole()
     {
-        $userRole = Yii::$app->authManager->getRole('user');
-        Yii::$app->authManager->assign($userRole, $this->owner->id);
+        $userRole = Yii::$app
+            ->authManager
+            ->getRole('user');
+        Yii::$app
+            ->authManager
+            ->assign($userRole, $this->owner->id);
     }
 
     public static function signUp(SignupForm $model): ?User
@@ -149,7 +161,7 @@ class User extends ActiveRecord implements IdentityInterface
             return null;
         }
 
-        $user = new User(
+        $user = new self(
             [
                 'username' => $model->username,
                 'email' => $model->email,

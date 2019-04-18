@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace app\modules\admin;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\admin\AuthAssignment;
 
 /**
  * AuthAssignmentSearch represents the model behind the search form of `app\models\AuthAssignment`.
@@ -14,7 +14,7 @@ class AuthAssignmentSearch extends AuthAssignment
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['item_name', 'user_id'], 'safe'],
@@ -25,9 +25,8 @@ class AuthAssignmentSearch extends AuthAssignment
     /**
      * {@inheritdoc}
      */
-    public function scenarios()
+    public function scenarios(): array
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -38,11 +37,9 @@ class AuthAssignmentSearch extends AuthAssignment
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params): ActiveDataProvider
     {
         $query = AuthAssignment::find();
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -51,12 +48,9 @@ class AuthAssignmentSearch extends AuthAssignment
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'created_at' => $this->created_at,
         ]);

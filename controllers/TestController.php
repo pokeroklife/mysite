@@ -1,13 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Романенко
- * Date: 29.03.2019
- * Time: 08:43
- */
+declare(strict_types=1);
 
 namespace app\controllers;
-
 
 use yii\base\Controller;
 
@@ -15,22 +9,22 @@ class TestController extends Controller
 {
     public $layout = 'myLayout';
 
-    public function actionIndex()
+    public function actionIndex(): string
     {
         return $this->render('index');
     }
 
-    public function actionCatalog()
+    public function actionCatalog(): string
     {
         return $this->render('catalog');
     }
 
-    public function actionContact()
+    public function actionContact(): string
     {
         return $this->render('contact');
     }
 
-    public function actionItem()
+    public function actionItem(): string
     {
         return $this->render('item');
     }

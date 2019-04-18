@@ -17,9 +17,19 @@ class NewsProvider
         return News::getNews();
     }
 
+    public function getArticleCategory(int $id): ActiveRecord
+    {
+        return News::getArticleCategory($id);
+    }
+
     public function getArticle(int $id): ActiveRecord
     {
         return News::getArticle($id);
+    }
+
+    public function getArticleTags(int $id): array
+    {
+        return News::findOne($id)->tags;
     }
 
     public function deleteArticle(int $id): bool
@@ -29,17 +39,7 @@ class NewsProvider
 
     public function createArticle(NewsCreateForm $model): ?News
     {
-        $article = new News([
-            'categories_id' => $model->categories,
-            'author_id' => $model->authorId,
-            'name' => $model->name,
-            'description' => $model->description,
-            'text' => $model->text,
-            'image' => $model->image,
-            'status' => $model->status,
-        ]);
-
-        return $article->save() ? $article : null;
+        return News::createArticle($model);
     }
 
 }

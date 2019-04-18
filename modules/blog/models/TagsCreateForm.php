@@ -17,7 +17,6 @@ class TagsCreateForm extends Model
     {
         return [
             [['name', 'status'], 'required'],
-            [['name'], 'string'],
             ['status', 'default', 'value' => 1],
             ['status', 'integer', 'min' => 0, 'max' => 1],
             [

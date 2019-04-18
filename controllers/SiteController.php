@@ -3,9 +3,17 @@ declare(strict_types=1);
 
 namespace app\controllers;
 
+use app\controllers\actions\IndexAction;
+use app\controllers\actions\LoginAction;
+use app\controllers\actions\LogOutAction;
+use app\controllers\actions\RequestPasswordResetAction;
+use app\controllers\actions\ResetPasswordAction;
+use app\controllers\actions\SignupAction;
+use yii\captcha\CaptchaAction;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\ErrorAction;
 
 class SiteController extends Controller
 {
@@ -41,29 +49,29 @@ class SiteController extends Controller
     {
         return [
             'error' => [
-                'class' => 'yii\web\ErrorAction',
+                'class' => ErrorAction::class,
             ],
             'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
+                'class' => CaptchaAction::class,
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
             'index' => [
-                'class' => 'app\controllers\actions\IndexAction',
+                'class' => IndexAction::class,
             ],
             'login' => [
-                'class' => 'app\controllers\actions\LoginAction',
+                'class' => LoginAction::class,
             ],
             'signup' => [
-                'class' => 'app\controllers\actions\SignupAction',
+                'class' => SignupAction::class,
             ],
             'passwordResetRequest' => [
-                'class' => 'app\controllers\actions\RequestPasswordResetAction',
+                'class' => RequestPasswordResetAction::class,
             ],
             'resetPassword' => [
-                'class' => 'app\controllers\actions\ResetPasswordAction',
+                'class' => ResetPasswordAction::class,
             ],
             'logout' => [
-                'class' => 'app\controllers\actions\LogOutAction',
+                'class' => LogOutAction::class,
             ],
         ];
     }

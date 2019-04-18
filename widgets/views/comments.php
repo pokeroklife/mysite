@@ -6,11 +6,21 @@
 
 
 <?php
-function commentRecurs($comments, $commentForm)
+function commentRecurs($comments, $commentForm, $newsId)
 {
     $html = '';
+
     foreach ($comments as $comment) {
-        $html .= '<li>' . $comment['username'] . $comment['created_at'];
+        if (Yii::$app->user->can('administration')) {
+            $delete = \yii\helpers\Html::a('Delete', ['comment/delete', 'commentId' => $comment['id'], 'newsId' => $newsId], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
+                ],
+            ]);
+        }
+        $html .= '<li>' . $comment['username'] . $comment['created_at'] . $delete;
         $html .= '<div class="commentText">' . $comment['comment'] . '</div>';
         $html .= \app\widgets\Comments::widget([
             'commentForm' => $commentForm,
@@ -19,7 +29,7 @@ function commentRecurs($comments, $commentForm)
         ]);
         if (isset($comment['childs']) && is_array($comment['childs'])) {
             $html .= '<ul>';
-            $html .= commentRecurs($comment['childs'], $commentForm);
+            $html .= commentRecurs($comment['childs'], $commentForm, $newsId);
             $html .= '</ul>';
         }
         $html .= '</li>';
@@ -29,7 +39,7 @@ function commentRecurs($comments, $commentForm)
 
 ?>
 <br>
-<?= commentRecurs($comments, $commentForm);
+<?= commentRecurs($comments, $commentForm, $newsId)
 ?>
 
 

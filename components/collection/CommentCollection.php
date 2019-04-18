@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
+
 use app\modules\blog\models\Comment;
-class CommentsCollection implements \IteratorAggregate
+
+class CommentCollection implements \IteratorAggregate
 {
 /**
-* @var Comments[]
+* @var Comment[]
 */
 private $comments = [];
 

@@ -30,23 +30,31 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar',
+            'id' => 'main-menu',
+        ],
+        'renderInnerContainer' => true,
+        'innerContainerOptions' => [
+            'class' => 'container'
+        ],
+        'brandLabel' => 'phpNT',
+        'brandUrl' => Yii::$app->homeUrl,
+        'brandOptions' => [
+            'class' => 'navbar-brand'
         ],
     ]);
 
     $menuItems = [
 
     ];
-     if (Yii::$app->user->can('administration')) {
+    if (Yii::$app->user->can('administration')) {
         $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
         $menuItems[] = ['label' => 'Test', 'url' => ['/test/index']];
         $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
         $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
-         $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/news']];
-         $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/news/create']];
+        $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/news']];
+        $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/news/create']];
         $menuItems[] = ['label' => 'Shop', 'url' => ['/shop/product']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
@@ -56,25 +64,28 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
-    } else if (Yii::$app->user->can('userRight')) {
-        $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-         $menuItems[] = ['label' => 'News', 'url' => ['/blog/news/']];
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
     } else {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        if (Yii::$app->user->can('userRight')) {
+            $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+            $menuItems[] = ['label' => 'News', 'url' => ['/blog/news/']];
+            $menuItems[] = '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>';
+        } else {
+            $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        }
     }
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
+
     ]);
 
     NavBar::end();

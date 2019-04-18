@@ -67,19 +67,40 @@ class Tag extends ActiveRecord
      */
     public function getTagsNews(): ActiveQuery
     {
-        return $this->hasMany(News::class, ['id' => 'news_id'])->viaTable('news_tag', ['tag_id' => 'id']);
+        return $this->hasMany(News::class, ['id' => 'news_id'])
+            ->viaTable('news_tag', ['tag_id' => 'id']);
     }
 
-    public static function getTags(): array
+    public static function getTags(array $tags = []): array
     {
-        return static::find()->select(['id', 'name'])->where(['status' => 1])->all();
+        return static::find()
+            ->select(['id', 'name'])
+            ->where(['status' => 1])
+            ->andFilterWhere(['name' => $tags])
+            ->all();
     }
 
-    public static function createTag(TagsCreateForm $model): bool
+    public static function getTagsArticle(): array
     {
-        $tag = new Tag();
-        $tag->name = $model->name;
-        $tag->status = $model->status;
-        return $tag->save();
+        return static::find()->select(['id', 'name'])
+            ->where(['status' => 1])
+            ->all();
     }
+
+    public static function getTagsName(): array
+    {
+        return static::find()->select(['name'])
+            ->where(['status' => 1])
+            ->all();
+    }
+
+
+    public static function createTag(string $name): ?self
+    {
+        $tags = new self();
+        $tags->name = $name;
+        return $tags->save() ? $tags : null;
+    }
+
+
 }

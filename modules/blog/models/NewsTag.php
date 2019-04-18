@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
+use yii\base\Exception;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 /**
  * This is the model class for table "news_tag".
@@ -47,21 +47,6 @@ class NewsTag extends ActiveRecord
         return [
             [['news_id', 'tag_id'], 'required'],
             [['news_id', 'tag_id'], 'integer'],
-            [['news_id', 'tag_id'], 'unique', 'targetAttribute' => ['news_id', 'tag_id']],
-            [
-                ['news_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => News::class,
-                'targetAttribute' => ['news_id' => 'id']
-            ],
-            [
-                ['tag_id'],
-                'exist',
-                'skipOnError' => true,
-                'targetClass' => Tag::class,
-                'targetAttribute' => ['tag_id' => 'id']
-            ],
         ];
     }
 
@@ -77,32 +62,25 @@ class NewsTag extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @param Tag[] $tags
+     * @param  int $newsId
+     * @return void
      */
-    public function getNews(): ActiveQuery
+    public static function createRelationArticleTags(array $tags, int $newsId): void
     {
-        return $this->hasOne(News::class, ['id' => 'news_id']);
-    }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTag(): ActiveQuery
-    {
-        return $this->hasOne(Tag::class, ['id' => 'tag_id']);
-    }
-
-    public static function createRelationArticleTags(NewsCreateForm $model, News $news): bool
-    {
-        foreach ($model->tags as $tag) {
-            $relation = new NewsTag();
-            $relation->news_id = $news->id;
-            $relation->tag_id = $tag;
-            $result = $relation->save();
-            if ($result === false) {
-                return false;
+        foreach ($tags as $tag) {
+            $relation = new self();
+            $relation->news_id = $newsId;
+            $relation->tag_id = $tag->id;
+            if ($relation->save() === false) {
+                throw new Exception('error');
             }
         }
-        return true;
+    }
+
+    public static function deleteArticleTags(int $newsId): bool
+    {
+        return (bool)static::deleteAll(['news_id' => $newsId]);
     }
 }

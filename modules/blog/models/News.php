@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
-use Yii;
+use app\components\behaviors\TagsCreateBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -22,9 +22,10 @@ use yii\db\ActiveRecord;
  * @property int $visits
  * @property int $created_at
  * @property int $updated_at
+
  *
  */
-class News extends \yii\db\ActiveRecord
+class News extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -40,6 +41,7 @@ class News extends \yii\db\ActiveRecord
     public function behaviors(): array
     {
         return [
+            'tagInsert' => TagsCreateBehavior::class,
             'class' => TimestampBehavior::class,
         ];
     }
@@ -89,11 +91,18 @@ class News extends \yii\db\ActiveRecord
         return static::find()->all();
     }
 
-    public static function getArticle(int $id): ActiveRecord
+    public static function getArticleCategory(int $id): ActiveRecord
     {
         return static::find()
             ->where(['id' => $id])
             ->with('category')
+            ->one();
+    }
+
+    public static function getArticle(int $id): ActiveRecord
+    {
+        return static::find()
+            ->where(['id' => $id])
             ->one();
     }
 
@@ -102,15 +111,33 @@ class News extends \yii\db\ActiveRecord
         return (bool)static::deleteAll(['id' => $id]);
     }
 
-    public function getComment(): ActiveQuery
+    public function getComments(): ActiveQuery
     {
         return $this->hasMany(Comment::class, ['news_id' => 'id']);
     }
 
-    public function getTag(): ActiveQuery
+
+    public function getTags(): ActiveQuery
     {
-        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->viaTable('news_tag', ['news_id' => 'id']);
+        return $this->hasMany(Tag::class, ['id' => 'tag_id'])
+            ->viaTable('news_tag', ['news_id' => 'id']);
     }
 
 
+    public static function createArticle(NewsCreateForm $model): ?News
+    {
+        $article = new self([
+            'categories_id' => $model->categories,
+            'author_id' => $model->authorId,
+            'name' => $model->name,
+            'description' => $model->description,
+            'text' => $model->text,
+            'image' => $model->image,
+            'status' => $model->status,
+        ]);
+
+        return $article->save() ? $article : null;
+
+
+    }
 }

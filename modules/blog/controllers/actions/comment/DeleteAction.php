@@ -25,11 +25,11 @@ class DeleteAction extends \yii\base\Action
         if ($this->commentsProvider->deleteComment($commentId)) {
             \Yii::$app->session->setFlash('success', 'success');
 
-            return $this->controller->redirect(['./news/view', 'id' => $newsId]);
+            return $this->controller->redirect(['./articles/view', 'id' => $newsId]);
         }
 
         \Yii::$app->session->setFlash('error', 'error');
 
-        return $this->controller->redirect(['./news/view', 'id' => $newsId]);
+        return $this->controller->redirect(['./articles/view', 'id' => $newsId]);
     }
 }

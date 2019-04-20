@@ -5,32 +5,32 @@ namespace app\modules\blog\controllers\actions\news;
 
 use app\modules\blog\models\CommentForm;
 use app\modules\blog\providers\CommentsProvider;
-use app\modules\blog\providers\NewsProvider;
-use app\modules\blog\controllers\NewsController;
+use app\modules\blog\providers\ArticlesProvider;
+use app\modules\blog\controllers\ArticlesController;
 use yii\base\Action;
 
 class ViewAction extends Action
 {
-    private $newsProvider;
+    private $articlesProvider;
     private $commentProvider;
 
     public function __construct(
         $id,
-        NewsController $controller,
-        NewsProvider $newsProvider,
+        ArticlesController $controller,
+        ArticlesProvider $articlesProvider,
         CommentsProvider $commentProvider
     ) {
         parent::__construct($id, $controller);
-        $this->newsProvider = $newsProvider;
+        $this->articlesProvider = $articlesProvider;
         $this->commentProvider = $commentProvider;
     }
 
     public function run(int $id): string
     {
 
-        $model = $this->newsProvider->getArticleCategory($id);
+        $model = $this->articlesProvider->getArticleCategory($id);
         $comments = $this->commentProvider->getComment($id);
-        $tags = $this->newsProvider->getArticleTags($id);
+        $tags = $this->articlesProvider->getArticleTags($id);
         $commentForm = new CommentForm();
         \Yii::$app->session->set('newsId', $id);
         return $this->controller->render('view',

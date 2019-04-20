@@ -16,8 +16,8 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property NewsTag[] $newsTags
- * @property News[] $news
+ * @property ArticlesTag[] $newsTags
+ * @property Articles[] $news
  */
 class Tag extends ActiveRecord
 {
@@ -65,10 +65,10 @@ class Tag extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTagsNews(): ActiveQuery
+    public function getTagsArticles(): ActiveQuery
     {
-        return $this->hasMany(News::class, ['id' => 'news_id'])
-            ->viaTable('news_tag', ['tag_id' => 'id']);
+        return $this->hasMany(Articles::class, ['id' => 'article_id'])
+            ->viaTable('article_tag', ['tag_id' => 'id']);
     }
 
     public static function getTags(array $tags = []): array
@@ -99,7 +99,7 @@ class Tag extends ActiveRecord
     {
         $tags = new self();
         $tags->name = $name;
-        return $tags->save() ? $tags : null;
+        return $tags->save()? $tags : null;
     }
 
 

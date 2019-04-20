@@ -26,7 +26,6 @@ class IndexAction extends Action
     public function run(): string
     {
         $categories = $this->categoriesProvider->getCategories();
-
         return $this->controller->render('index', compact('categories'));
     }
 }

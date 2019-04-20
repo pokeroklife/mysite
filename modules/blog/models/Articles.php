@@ -3,17 +3,17 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
-use app\components\behaviors\TagsCreateBehavior;
+use app\modules\blog\behaviors\TagsBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "news".
+ * This is the model class for table "articles".
  *
  * @property int $id
  * @property int $author_id
- * @property int $categories_id
+ * @property int $category
  * @property string $name
  * @property string $description
  * @property string $text
@@ -22,17 +22,18 @@ use yii\db\ActiveRecord;
  * @property int $visits
  * @property int $created_at
  * @property int $updated_at
-
  *
  */
-class News extends ActiveRecord
+class Articles extends ActiveRecord
 {
+    public $articleCreateForm;
+
     /**
      * {@inheritdoc}
      */
     public static function tableName(): string
     {
-        return 'news';
+        return 'articles';
     }
 
     /**
@@ -41,7 +42,7 @@ class News extends ActiveRecord
     public function behaviors(): array
     {
         return [
-            'tagInsert' => TagsCreateBehavior::class,
+            'tagInsert' => TagsBehavior::class,
             'class' => TimestampBehavior::class,
         ];
     }
@@ -49,9 +50,10 @@ class News extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['name', 'description', 'text', 'categories_id'], 'required'],
-            [['author_id', 'status', 'visits', 'categories_id'], 'integer'],
+            [['name', 'description', 'text', 'category'], 'required'],
+            [['author_id', 'status', 'visits', 'category'], 'integer'],
             [['text'], 'string'],
+            [['articleCreateForm'], 'safe'],
             [['name', 'description', 'image'], 'string', 'max' => 255],
 
         ];
@@ -71,7 +73,7 @@ class News extends ActiveRecord
             'image' => 'Upload Image',
             'status' => 'Status',
             'visits' => 'Visits',
-            'categories_id' => 'categoriesId',
+            'category' => 'categoriesId',
         ];
     }
 
@@ -80,13 +82,13 @@ class News extends ActiveRecord
      */
     public function getCategory(): ActiveQuery
     {
-        return $this->hasOne(Categories::class, ['id' => 'categories_id']);
+        return $this->hasOne(Categories::class, ['id' => 'category']);
     }
 
     /**
-     * @return News[]
+     * @return Articles[]
      */
-    public static function getNews(): array
+    public static function getArticles(): array
     {
         return static::find()->all();
     }
@@ -113,21 +115,21 @@ class News extends ActiveRecord
 
     public function getComments(): ActiveQuery
     {
-        return $this->hasMany(Comment::class, ['news_id' => 'id']);
+        return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
 
     public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-            ->viaTable('news_tag', ['news_id' => 'id']);
+            ->viaTable('article_tag', ['article_id' => 'id']);
     }
 
 
-    public static function createArticle(NewsCreateForm $model): ?News
+    public static function createArticle(ArticleForm $model): ?self
     {
         $article = new self([
-            'categories_id' => $model->categories,
+            'category' => $model->category,
             'author_id' => $model->authorId,
             'name' => $model->name,
             'description' => $model->description,
@@ -135,9 +137,26 @@ class News extends ActiveRecord
             'image' => $model->image,
             'status' => $model->status,
         ]);
-
+        $article->articleCreateForm = $model;
         return $article->save() ? $article : null;
 
 
     }
+
+    public static function updateArticle($model, $newsId): bool
+    {
+        $updatedArticle = self::getArticle($newsId);
+        $updatedArticle->category = $model->category;
+        $updatedArticle->name = $model->name;
+        $updatedArticle->description = $model->description;
+        $updatedArticle->text = $model->text;
+        $updatedArticle->status = $model->status;
+        if (isset($model->image)) {
+            $updatedArticle->image = $model->image;
+        }
+        $updatedArticle->articleCreateForm = $model;
+        return $updatedArticle->save();
+    }
+
+
 }

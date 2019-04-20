@@ -53,9 +53,8 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Test', 'url' => ['/test/index']];
         $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
         $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
-        $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/news']];
-        $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/news/create']];
-        $menuItems[] = ['label' => 'Shop', 'url' => ['/shop/product']];
+        $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/articles']];
+        $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/articles/create']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -67,7 +66,7 @@ AppAsset::register($this);
     } else {
         if (Yii::$app->user->can('userRight')) {
             $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-            $menuItems[] = ['label' => 'News', 'url' => ['/blog/news/']];
+            $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/articles/']];
             $menuItems[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
@@ -93,8 +92,9 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+            'links' => $this->params['breadcrumbs'] ?? []
+        ])
+        ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

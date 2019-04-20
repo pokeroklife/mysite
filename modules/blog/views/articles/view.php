@@ -6,13 +6,13 @@ use \yii\helpers\Html;
 $this->title = 'Новость';
 $this->params['breadcrumbs'][] = array(
     'label' => 'Все новости',
-    'url' => \yii\helpers\Url::toRoute('/blog/news/')
+    'url' => \yii\helpers\Url::toRoute('/blog/articles/')
 );
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php if (isset($tags)): ?>
     <?php foreach ($tags as $tag): ?>
-        <?= Html::a($tag->name, ['/blog/news/', 'tagId' => $tag->id]) ?>
+        <?= Html::a($tag->name, ['/blog/articles/', 'tagId' => $tag->id]) ?>
     <?php endforeach; ?>
 <?php endif; ?>
 

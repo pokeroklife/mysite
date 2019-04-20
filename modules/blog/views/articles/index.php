@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php if(isset($tags)): ?>
 <?php foreach ($tags as $tag): ?>
 
-    <?= Html::a($tag->name, ['/blog/news/', 'tagId' => $tag->id]) ?>
+    <?= Html::a($tag->name, ['/blog/articles/', 'tagId' => $tag->id]) ?>
 
 <?php endforeach ?>
 <?php endif ?>
@@ -22,9 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="card">
         <h5><?= Html::encode($model->name) ?></h5>
         <?= Html::a(Html::img(('/img/small/' . $model->image),
-            ['alt' => 'картинка', 'width' => '150px', 'height' => '150px']), ['news/view', 'id' => $model->id]) ?>
+            ['alt' => 'картинка', 'width' => '150px', 'height' => '150px']), ['articles/view', 'id' => $model->id]) ?>
         <p><?= Html::encode($model->description) ?></p>
-        <?= Html::a('Перейти на новость', ['news/view', 'id' => $model->id]) ?>
+        <?= Html::a('Перейти на новость', ['articles/view', 'id' => $model->id]) ?>
     </div>
 <?php endforeach; ?>
 

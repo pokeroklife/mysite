@@ -14,7 +14,7 @@ use yii\db\Expression;
  * @property int $id
  * @property int $parent_id
  * @property string $username
- * @property int $news_id
+ * @property int $article_id
  * @property string $comment
  * @property string $created_at
  *
@@ -51,8 +51,8 @@ class Comment extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['username', 'news_id', 'comment'], 'required'],
-            [['news_id', 'parent_id'], 'integer'],
+            [['username', 'article_id', 'comment'], 'required'],
+            [['article_id', 'parent_id'], 'integer'],
             [['comment'], 'string'],
             [['username'], 'string', 'max' => 255],
         ];
@@ -65,7 +65,7 @@ class Comment extends ActiveRecord
     {
         return [
             'username' => 'Username',
-            'news_id' => 'News ID',
+            'article_id' => 'News ID',
             'comment' => 'Comment',
         ];
     }
@@ -75,14 +75,14 @@ class Comment extends ActiveRecord
      */
     public function getNews(): ActiveQuery
     {
-        return $this->hasOne(News::class, ['id' => 'news_id']);
+        return $this->hasOne(Articles::class, ['id' => 'article_id']);
     }
 
 
     public static function getComment(int $id): array
     {
         return static::find()
-            ->where(['news_id' => $id])
+            ->where(['article_id' => $id])
             ->orderBy('created_at')
             ->asArray()
             ->all();

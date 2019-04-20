@@ -29,6 +29,6 @@ class CreateAction extends \yii\base\Action
         if ($comment->load(\Yii::$app->request->post()) &&
             $this->commentProvider->createComment($comment)) {
 
-        }return $this->controller->redirect(['news/view', 'id' => $comment->newsId]);
+        }return $this->controller->redirect(['articles/view', 'id' => $comment->newsId]);
     }
 }

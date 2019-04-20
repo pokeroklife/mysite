@@ -17,9 +17,14 @@ class CommentController extends Controller
                 'only' => ['delete', 'create'],
                 'rules' => [
                     [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['user'],
+                    ],
+                    [
                         'actions' => ['delete', 'create'],
                         'allow' => true,
-                        'roles' => ['admin', 'user'],
+                        'roles' => ['admin'],
                     ],
                 ],
             ],

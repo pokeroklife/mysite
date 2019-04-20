@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'enctype' => 'multipart/form-data'
                     ]
             ]); ?>
-            <?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id',
+            <?= $form->field($model, 'category')->dropDownList(ArrayHelper::map($categories, 'id',
                 'name')) ?>
             <?= Html::a('Создать новую категорию', ['./categories/create']) ?>
 

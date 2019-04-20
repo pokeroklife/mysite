@@ -19,7 +19,7 @@ class CategoryProvider
 
     public function getCategory(int $id): array
     {
-        return Categories::findOne($id)->categoriesNews;
+        return Categories::findOne($id)->categoriesArticles;
     }
 
     public function deleteCategory(int $id): bool

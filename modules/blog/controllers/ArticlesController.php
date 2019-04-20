@@ -12,14 +12,14 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
-class NewsController extends Controller
+class ArticlesController extends Controller
 {
     public function behaviors(): array
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index', 'view', 'delete', 'create'],
+                'only' => ['index', 'view', 'delete', 'create', 'update'],
                 'rules' => [
                     [
                         'actions' => ['index', 'view'],
@@ -27,7 +27,7 @@ class NewsController extends Controller
                         'roles' => ['admin', 'user'],
                     ],
                     [
-                        'actions' => ['delete', 'create'],
+                        'actions' => ['delete', 'create', 'update'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

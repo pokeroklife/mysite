@@ -19,7 +19,7 @@ class CommentsProvider
     {
         $comment = new Comment();
         $comment->comment = $model->comment;
-        $comment->news_id = $model->newsId;
+        $comment->article_id = $model->newsId;
         $comment->username = $model->username;
         $comment->parent_id = $model->parentId;
 
@@ -54,5 +54,4 @@ class CommentsProvider
     {
         return Comment::deleteComment($commentId);
     }
-
 }

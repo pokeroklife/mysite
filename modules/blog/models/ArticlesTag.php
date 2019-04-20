@@ -3,27 +3,28 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
-use yii\base\Exception;
+use yii\db\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+
 /**
- * This is the model class for table "news_tag".
+ * This is the model class for table "article_tag".
  *
- * @property int $news_id
+ * @property int $article_id
  * @property int $tag_id
  * @property string $created_at
  *
- * @property News $news
+ * @property Articles $news
  * @property Tag $tag
  */
-class NewsTag extends ActiveRecord
+class ArticlesTag extends ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName(): string
     {
-        return 'news_tag';
+        return 'article_tag';
     }
 
     /**
@@ -45,8 +46,8 @@ class NewsTag extends ActiveRecord
     public function rules(): array
     {
         return [
-            [['news_id', 'tag_id'], 'required'],
-            [['news_id', 'tag_id'], 'integer'],
+            [['article_id', 'tag_id'], 'required'],
+            [['article_id', 'tag_id'], 'integer'],
         ];
     }
 
@@ -56,31 +57,31 @@ class NewsTag extends ActiveRecord
     public function attributeLabels(): array
     {
         return [
-            'news_id' => 'News ID',
+            'article_id' => 'News ID',
             'tag_id' => 'Tag ID',
         ];
     }
 
     /**
      * @param Tag[] $tags
-     * @param  int $newsId
+     * @param  int $articleId
      * @return void
+     * @throws Exception
      */
-    public static function createRelationArticleTags(array $tags, int $newsId): void
+    public static function createRelationArticleTags(array $tags, int $articleId): void
     {
-
         foreach ($tags as $tag) {
             $relation = new self();
-            $relation->news_id = $newsId;
+            $relation->article_id = $articleId;
             $relation->tag_id = $tag->id;
             if ($relation->save() === false) {
-                throw new Exception('error');
+                throw new Exception('привязка тэга к новости не сохранилась');
             }
         }
     }
 
-    public static function deleteArticleTags(int $newsId): bool
+    public static function deleteArticleTags(int $articleId): void
     {
-        return (bool)static::deleteAll(['news_id' => $newsId]);
+        static::deleteAll(['article_id' => $articleId]);
     }
 }

@@ -11,6 +11,9 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
+        '@image' => 'W:/domains/mysite/web/img',
+        '@smallImage' => 'W:/domains/mysite/web/img/small',
+
     ],
     'layout' => 'main',
     'modules' => [

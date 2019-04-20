@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\Blog\models\NewsCreateForm */
+/* @var $model app\modules\Blog\models\ArticleForm */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

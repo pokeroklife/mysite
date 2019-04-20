@@ -10,14 +10,14 @@ class TagsProvider
     /**
      * @return Tag[]
      */
-    public function getTags(): array
+    public function getTags(): array  
     {
         return Tag::getTags();
     }
 
-    public function getNewsWithTag(int $tagId): array
+    public function getArticleWithTag(int $tagId): array
     {
-        return Tag::findOne($tagId)->tagsNews;
+        return Tag::findOne($tagId)->tagsArticles;
     }
 
 //

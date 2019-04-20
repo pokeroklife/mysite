@@ -8,7 +8,7 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Создание новой Категории';
 $this->params['breadcrumbs'][] = array(
     'label' => 'Создание статьи',
-    'url' => \yii\helpers\Url::toRoute('/blog/news/create')
+    'url' => \yii\helpers\Url::toRoute('/blog/articles/create')
 );
 $this->params['breadcrumbs'][] = $this->title;
 ?>

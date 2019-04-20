@@ -6,11 +6,11 @@ namespace app\modules\blog\models;
 use yii\base\Model;
 use yii\web\UploadedFile;
 
-class NewsCreateForm extends Model
+class ArticleForm extends Model
 {
     public $id;
 
-    public $categories;
+    public $category;
 
     public $tags ;
 
@@ -25,35 +25,37 @@ class NewsCreateForm extends Model
     /** @var UploadedFile */
     public $image;
 
-    public $imagePath;
-
     public $authorId;
+
+    const SCENARIO_UPDATE_ARTICLE = 'update';
+
+    const SCENARIO_CREATE_ARTICLE = 'create';
 
 
     public function rules(): array
     {
         return [
-            [['categories', 'name', 'description', 'text', 'status', 'tags'], 'required'],
-            [['image'], 'required', 'message' => 'Картинка отсутствует'],
+            [['category', 'name', 'description', 'text', 'status', 'tags'], 'required'],
+            [['image'], 'required', 'message' => 'Картинка отсутствует', 'on' => self::SCENARIO_CREATE_ARTICLE],
             [['name', 'description', 'text'], 'string', 'min' => 5],
-            [['imagePath'], 'string'],
             ['status', 'default', 'value' => 1],
             ['status', 'integer', 'min' => 0, 'max' => 1],
             [['image'], 'file', 'extensions' => ['gif', 'png', 'jpg']],
             [
                 'name',
                 'unique',
-                'targetClass' => News::class,
-                'message' => 'Эта новость уже существует'
+                'targetClass' => Articles::class,
+                'message' => 'Эта новость уже существует',
+                'on' => self::SCENARIO_CREATE_ARTICLE
             ],
 
         ];
     }
-
+    
     public function attributeLabels():array
     {
         return [
-            'categories' => 'Категория новости',
+            'category' => 'Категория новости',
             'name' => 'Название новости',
             'description' => 'Описание новости',
             'text' => 'Текст новости',

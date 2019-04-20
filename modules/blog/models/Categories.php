@@ -59,9 +59,9 @@ class Categories extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCategoriesNews(): object
+    public function getCategoriesArticles(): object
     {
-        return $this->hasMany(News::class, ['categories_id' => 'id']);
+        return $this->hasMany(Articles::class, ['category' => 'id']);
     }
 
     /**

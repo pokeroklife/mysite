@@ -23,6 +23,9 @@ $config = [
         'blog' => [
             'class' => \app\modules\blog\Blog::class,
         ],
+        'shop' => [
+            'class' => \app\modules\shop\Shop::class,
+        ],
     ],
     'components' => [
         'i18n' => [

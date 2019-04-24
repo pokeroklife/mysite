@@ -8,13 +8,21 @@ use yii\base\Model;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
 
+/**
+ * Class UploaderComponent
+ * @package app\components
+ */
 class UploaderComponent extends BaseObject
 {
-    public const THUMBNAIL_WIDTH = 100;
-    public const THUMBNAIL_HEIGHT = 60;
+    public const THUMBNAIL_WIDTH = 200;
+    public const THUMBNAIL_HEIGHT = 120;
     public const THUMBNAIL_QUALITY = 100;
 
-    public static function upload(Model $model): ?string
+    /**
+     * @param UploadedFile $file
+     * @return string|null
+     */
+    public static function upload(UploadedFile $file): ?string
     {
         if (($file = UploadedFile::getInstance($model, 'image')) !== null
             && self::saveImage($file)
@@ -25,6 +33,10 @@ class UploaderComponent extends BaseObject
         return null;
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
     public static function saveImage(UploadedFile $file): bool
     {
         $aliasImage = "@image/{$file->baseName}.{$file->extension}";
@@ -34,6 +46,10 @@ class UploaderComponent extends BaseObject
         return false;
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     */
     public static function saveSmallImage(UploadedFile $file): bool
     {
         $aliasImage = "@image/{$file->baseName}.{$file->extension}";

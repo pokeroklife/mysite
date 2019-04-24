@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\modules\blog\models;
 
 use app\modules\blog\behaviors\TagsBehavior;
+use app\modules\blog\validators\ModelValidator;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -27,6 +28,7 @@ use yii\db\ActiveRecord;
 class Articles extends ActiveRecord
 {
     public $articleCreateForm;
+    public $tags;
 
     /**
      * {@inheritdoc}
@@ -55,6 +57,14 @@ class Articles extends ActiveRecord
             [['text'], 'string'],
             [['articleCreateForm'], 'safe'],
             [['name', 'description', 'image'], 'string', 'max' => 255],
+            [
+                ['tags'],
+                'each',
+                'rule' => [
+                    ModelValidator::class,
+                    'modelClass' => Tag::class
+                ]
+            ]
 
         ];
     }

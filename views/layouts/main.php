@@ -55,6 +55,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
         $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/articles']];
         $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/articles/create']];
+        $menuItems[] = ['label' => 'типа магазин', 'url' => ['/shop/products']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(

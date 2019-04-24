@@ -1,19 +1,26 @@
 <?php
 declare(strict_types=1);
 
-namespace app\modules\blog\controllers;
+namespace app\modules\shop\controllers;
 
-use app\modules\blog\controllers\actions\news\CreateAction;
-use app\modules\blog\controllers\actions\news\DeleteAction;
-use app\modules\blog\controllers\actions\news\IndexAction;
-use app\modules\blog\controllers\actions\news\UpdateAction;
-use app\modules\blog\controllers\actions\news\ViewAction;
+use app\modules\shop\controllers\actions\products\UpdateAction;
+use app\modules\shop\controllers\actions\products\CreateAction;
+use app\modules\shop\controllers\actions\products\DeleteAction;
+use app\modules\shop\controllers\actions\products\IndexAction;
+use app\modules\shop\controllers\actions\products\ViewAction;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\filters\VerbFilter;
 
-class ArticlesController extends Controller
+/**
+ * Class ProductsController
+ * @package app\modules\shop\controllers
+ */
+class ProductsController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [
@@ -21,13 +28,9 @@ class ArticlesController extends Controller
                 'class' => AccessControl::class,
                 'only' => ['index', 'view', 'delete', 'create', 'update'],
                 'rules' => [
+
                     [
-                        'actions' => ['index', 'view'],
-                        'allow' => true,
-                        'roles' => ['admin', 'user'],
-                    ],
-                    [
-                        'actions' => ['delete', 'create', 'update'],
+                        'actions' => ['delete', 'create', 'update', 'view', 'index'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
@@ -44,15 +47,17 @@ class ArticlesController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actions(): array
     {
         $actions = parent::actions();
         $actions ['index'] = ['class' => IndexAction::class];
-        $actions ['view'] = ['class' => ViewAction::class];
-        $actions ['delete'] = ['class' => DeleteAction::class];
-        $actions ['create'] = ['class' => CreateAction::class];
         $actions ['update'] = ['class' => UpdateAction::class];
-
+        $actions ['create'] = ['class' => CreateAction::class];
+        $actions ['delete'] = ['class' => DeleteAction::class];
+        $actions ['view'] = ['class' => ViewAction::class];
         return $actions;
     }
 }

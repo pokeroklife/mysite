@@ -12,6 +12,11 @@ use yii\db\Exception;
 
 class TagsBehavior extends Behavior
 {
+    public function __construct(array $config = [])
+    {
+        parent::__construct($config);
+    }
+
     public function events(): array
     {
         return [
@@ -53,20 +58,17 @@ class TagsBehavior extends Behavior
      */
     private function getRelationTags(): array
     {
-        try {
-            /** @var Articles $article */
-            $article = $this->owner;
-            $tags = Tag::getTags($article->articleCreateForm->tags);
-            $newTags = $this->getNewTags($tags, $article->articleCreateForm->tags);
-            foreach ($newTags as $name) {
-                if (($tag = Tag::createTag($name)) === null) {
-                    throw new Exception('тэги не сохранились');
-                }
-                $tags[] = $tag;
+        /** @var Articles $article */
+        $article = $this->owner;
+        $tags = Tag::getTags($article->articleCreateForm->tags);
+        $newTags = $this->getNewTags($tags, $article->articleCreateForm->tags);
+        foreach ($newTags as $name) {
+            if (($tag = Tag::createTag($name)) === null) {
+                throw new Exception('тэги не сохранились');
             }
-        } catch (Exception $e) {
-            throw $e;
+            $tags[] = $tag;
         }
+
         return $tags;
     }
 

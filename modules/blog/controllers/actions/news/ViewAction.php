@@ -31,6 +31,7 @@ class ViewAction extends Action
         $model = $this->articlesProvider->getArticleCategory($id);
         $comments = $this->commentProvider->getComment($id);
         $tags = $this->articlesProvider->getArticleTags($id);
+        var_dump($tags);die;
         $commentForm = new CommentForm();
         \Yii::$app->session->set('newsId', $id);
         return $this->controller->render('view',

@@ -5,6 +5,7 @@ namespace app\modules\blog\providers;
 
 use app\modules\blog\models\ArticleForm;
 use app\modules\blog\models\Articles;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 class ArticlesProvider
@@ -27,9 +28,9 @@ class ArticlesProvider
         return Articles::getArticle($id);
     }
 
-    public function getArticleTags(int $id): array
+    public function getArticleTags(int $id): ActiveQuery
     {
-        return Articles::findOne($id)->tags;
+        return Articles::findOne($id)->getTags();
     }
 
     public function deleteArticle(int $id): bool

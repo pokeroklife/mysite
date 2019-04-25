@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <h3><?= Yii::$app->session->getFlash('success') ?></h3>
 <div class="new" style="width: 18rem;">
     <h5><?= Html::encode($model->name) ?></h5>
-    <img src=" /img/<?= $model->image ?>" alt="картинка" width="500px" height="350px">
+    <img src=" /uploads/<?= $model->image ?>" alt="картинка" width="500px" height="350px">
     <p> <?= Html::encode($model->text) ?></p>
     <?php if (Yii::$app->user->can('administration')): ?>
         <?= Html::a('Update', [

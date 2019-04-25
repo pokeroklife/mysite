@@ -28,7 +28,7 @@ use yii\db\ActiveRecord;
 class Articles extends ActiveRecord
 {
     public $articleCreateForm;
-    public $tags;
+
 
     /**
      * {@inheritdoc}
@@ -57,14 +57,14 @@ class Articles extends ActiveRecord
             [['text'], 'string'],
             [['articleCreateForm'], 'safe'],
             [['name', 'description', 'image'], 'string', 'max' => 255],
-            [
-                ['tags'],
-                'each',
-                'rule' => [
-                    ModelValidator::class,
-                    'modelClass' => Tag::class
-                ]
-            ]
+//            [
+//                ['tags'],
+//                'each',
+//                'rule' => [
+//                    ModelValidator::class,
+//                    'modelClass' => Tag::class
+//                ]
+//            ]
 
         ];
     }

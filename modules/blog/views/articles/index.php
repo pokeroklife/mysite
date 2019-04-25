@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="card">
         <h5><?= Html::encode($model->name) ?></h5>
-        <?= Html::a(Html::img(('/img/small/' . $model->image),
+        <?= Html::a(Html::img('/uploads/thumbnail/' . $model->image,
             ['alt' => 'картинка', 'width' => '150px', 'height' => '150px']), ['articles/view', 'id' => $model->id]) ?>
         <p><?= Html::encode($model->description) ?></p>
         <?= Html::a('Перейти на новость', ['articles/view', 'id' => $model->id]) ?>

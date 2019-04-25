@@ -15,7 +15,7 @@ use yii\web\UploadedFile;
  */
 class CreateAction extends Action
 {
-    private $imageComponent;
+        private $imageComponent;
 
     /**
      * CreateAction constructor.

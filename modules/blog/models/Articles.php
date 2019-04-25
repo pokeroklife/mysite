@@ -8,6 +8,7 @@ use app\modules\blog\validators\ModelValidator;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\BaseActiveRecord;
 
 /**
  * This is the model class for table "articles".
@@ -27,8 +28,7 @@ use yii\db\ActiveRecord;
  */
 class Articles extends ActiveRecord
 {
-    public $articleCreateForm;
-
+    public $articleTags;
 
     /**
      * {@inheritdoc}
@@ -103,11 +103,19 @@ class Articles extends ActiveRecord
         return static::find()->all();
     }
 
-    public static function getArticleCategory(int $id): ActiveRecord
+    public static function getArticleCategoryTags(int $id): ActiveRecord
     {
         return static::find()
             ->where(['id' => $id])
-            ->with('category')
+            ->with('category', 'tags')
+            ->one();
+    }
+
+    public static function getArticleTags(int $id): ActiveRecord
+    {
+        return static::find()
+            ->where(['id' => $id])
+            ->with('tags')
             ->one();
     }
 
@@ -147,25 +155,18 @@ class Articles extends ActiveRecord
             'image' => $model->image,
             'status' => $model->status,
         ]);
-        $article->articleCreateForm = $model;
+        $article->articleTags = $model->tags;
         return $article->save() ? $article : null;
 
 
     }
 
-    public static function updateArticle($model, $newsId): bool
+    public static function updateArticle(array $articles): bool
     {
-        $updatedArticle = self::getArticle($newsId);
-        $updatedArticle->category = $model->category;
-        $updatedArticle->name = $model->name;
-        $updatedArticle->description = $model->description;
-        $updatedArticle->text = $model->text;
-        $updatedArticle->status = $model->status;
-        if (isset($model->image)) {
-            $updatedArticle->image = $model->image;
-        }
-        $updatedArticle->articleCreateForm = $model;
-        return $updatedArticle->save();
+        $article = new self();
+        $article->articleTags = $articles['tags'];
+        return $article->save();
+
     }
 
 

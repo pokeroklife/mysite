@@ -7,6 +7,7 @@ use app\modules\blog\models\ArticleForm;
 use app\modules\blog\models\Articles;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\db\BaseActiveRecord;
 
 class ArticlesProvider
 {
@@ -18,19 +19,9 @@ class ArticlesProvider
         return Articles::getArticles();
     }
 
-    public function getArticleCategory(int $id): ActiveRecord
+    public function getArticleCategoryTags(int $id): ActiveRecord
     {
-        return Articles::getArticleCategory($id);
-    }
-
-    public function getArticle(int $id): ActiveRecord
-    {
-        return Articles::getArticle($id);
-    }
-
-    public function getArticleTags(int $id): ActiveQuery
-    {
-        return Articles::findOne($id)->getTags();
+        return Articles::getArticleCategoryTags($id);
     }
 
     public function deleteArticle(int $id): bool
@@ -43,21 +34,21 @@ class ArticlesProvider
         return Articles::createArticle($model);
     }
 
-    public function updateArticle(ArticleForm $model,int $newsId): bool
+    public function updateArticle(array $articles): bool
     {
-        return Articles::updateArticle($model, $newsId);
+        return Articles::updateArticle($articles);
     }
-
-    public function getOldModel(ArticleForm $model,int $id): ArticleForm
-    {
-        $dbModel = Articles::getArticle($id);
-        $model->category = $dbModel->category;
-        $model->name = $dbModel->name;
-        $model->description = $dbModel->description;
-        $model->text = $dbModel->text;
-        $model->image = $dbModel->image;
-        $model->status = $dbModel->status;
-
-        return $model;
-    }
+//
+//    public function getOldModel(ArticleForm $model,int $id): ArticleForm
+//    {
+//        $dbModel = Articles::getArticle($id);
+//        $model->category = $dbModel->category;
+//        $model->name = $dbModel->name;
+//        $model->description = $dbModel->description;
+//        $model->text = $dbModel->text;
+//        $model->image = $dbModel->image;
+//        $model->status = $dbModel->status;
+//
+//        return $model;
+//    }
 }

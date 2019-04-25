@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'tags')
                 ->widget(\kartik\select2\Select2::class, [
-                    'data' => ArrayHelper::map($tags, 'name',
+                    'data' => ArrayHelper::map($model->tags, 'name',
                         'name'),
                     'options' => ['placeholder' => 'Select a tag ...', 'multiple' => true],
                     'pluginOptions' => [

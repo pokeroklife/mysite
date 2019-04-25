@@ -95,13 +95,12 @@ class CreateAction extends Action
         }
 
         $categories = $this->categoriesProvider->getCategories();
-        $tags = $this->tagsProvider->getTags();
+       $model->tags = $this->tagsProvider->getTags();
 
         return $this->controller->render('create',
             compact(
                 'model',
-                'categories',
-                'tags'
+                'categories'
             )
         );
     }

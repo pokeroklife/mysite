@@ -10,8 +10,8 @@ $this->params['breadcrumbs'][] = array(
 );
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php if (isset($tags)): ?>
-    <?php foreach ($tags as $tag): ?>
+<?php if (isset($model->tags)): ?>
+    <?php foreach ($model->tags as $tag): ?>
         <?= Html::a($tag->name, ['/blog/articles/', 'tagId' => $tag->id]) ?>
     <?php endforeach; ?>
 <?php endif; ?>

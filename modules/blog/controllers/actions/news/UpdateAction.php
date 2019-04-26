@@ -5,43 +5,69 @@ namespace app\modules\blog\controllers\actions\news;
 
 use app\components\ImageUploadComponent;
 use app\modules\blog\controllers\ArticlesController;
-use app\modules\blog\providers\ArticlesProvider;
+use app\modules\blog\models\Articles;
 use app\modules\blog\providers\CategoryProvider;
 use yii\base\Action;
+use yii\db\Exception;
 use yii\web\UploadedFile;
 
+/**
+ * Class UpdateAction
+ * @package app\modules\blog\controllers\actions\news
+ */
 class UpdateAction extends Action
 {
-    private $articlesProvider;
+    /**
+     * @var CategoryProvider
+     */
     private $categoriesProvider;
+    /**
+     * @var ImageUploadComponent
+     */
     private $imageComponent;
 
+    /**
+     * UpdateAction constructor.
+     * @param $id
+     * @param ArticlesController $controller
+     * @param CategoryProvider $categoriesProvider
+     * @param ImageUploadComponent $imageComponent
+     */
     public function __construct(
         $id,
         ArticlesController $controller,
-        ArticlesProvider $articlesProvider,
         CategoryProvider $categoriesProvider,
         ImageUploadComponent $imageComponent
     ) {
         parent::__construct($id, $controller);
-        $this->articlesProvider = $articlesProvider;
         $this->categoriesProvider = $categoriesProvider;
         $this->imageComponent = $imageComponent;
     }
 
+    /**
+     * @param int $id
+     * @return string|\yii\web\Response
+     * @throws \yii\web\NotFoundHttpException
+     */
 
     public function run(int $id)
     {
-        $model = $this->articlesProvider->getArticleCategoryTags($id);
+        $model = Articles::findModel($id);
+        $currentImage = $model->image;
 
-        if ($model->load(\Yii::$app->request->post())) {
+        if (\Yii::$app->request->isPost && $model->load(\Yii::$app->request->post())) {
             $articles = \Yii::$app->request->post('Articles');
+            $model->tag = $articles['tag'];
+
             try {
                 if (($file = UploadedFile::getInstance($model, 'image')) !== null) {
-                    $image = $this->imageComponent->saveImage($file);
+                    $model->image = $this->imageComponent->saveImage($file);
+                    $this->imageComponent->deleteCurrentImage($currentImage);
+                } else {
+                    $model->image = $currentImage;
                 }
-                if ($this->articlesProvider->updateArticle($articles)) {
 
+                if ($model->save()) {
                     \Yii::$app->session->setFlash('success', 'Статья изменена');
                     return $this->controller->redirect(['view', 'id' => $id]);
                 }
@@ -51,7 +77,7 @@ class UpdateAction extends Action
         }
 
         $categories = $this->categoriesProvider->getCategories();
-
+        $model->tag = Articles::findOne($id)->tags;
         return $this->controller->render('create', [
             'model' => $model,
             'categories' => $categories,

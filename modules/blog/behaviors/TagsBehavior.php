@@ -10,13 +10,15 @@ use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\db\Exception;
 
+/**
+ * Class TagsBehavior
+ * @package app\modules\blog\behaviors
+ */
 class TagsBehavior extends Behavior
 {
-    public function __construct(array $config = [])
-    {
-        parent::__construct($config);
-    }
-
+    /**
+     * @return array
+     */
     public function events(): array
     {
         return [
@@ -41,6 +43,7 @@ class TagsBehavior extends Behavior
     /**
      * @return void
      * @throws Exception
+     * @property Articles $this->owner->id
      */
     public function update(): void
     {
@@ -60,8 +63,8 @@ class TagsBehavior extends Behavior
     {
         /** @var Articles $article */
         $article = $this->owner;
-        $tags = Tag::getTags($article->articleTags);
-        $newTags = $this->getNewTags($tags, $article->articleTags);
+        $tags = Tag::getTags($article->tag);
+        $newTags = $this->getNewTags($tags, $article->tag);
         foreach ($newTags as $name) {
             if (($tag = Tag::createTag($name)) === null) {
                 throw new Exception('тэги не сохранились');
@@ -72,6 +75,11 @@ class TagsBehavior extends Behavior
         return $tags;
     }
 
+    /**
+     * @param array $oldTags
+     * @param array $newTags
+     * @return array
+     */
     private function getNewTags(array $oldTags, array $newTags): array
     {
         $result = array_flip($newTags);

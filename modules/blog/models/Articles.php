@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
+use app\components\DeleteImageBehavior;
 use app\modules\blog\behaviors\TagsBehavior;
-use app\modules\blog\validators\ModelValidator;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use yii\db\BaseActiveRecord;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "articles".
@@ -24,14 +24,21 @@ use yii\db\BaseActiveRecord;
  * @property int $visits
  * @property int $created_at
  * @property int $updated_at
- *
+ * @property Tag[] $tags
+ * Class Articles
+ * @package app\modules\blog\models
  */
 class Articles extends ActiveRecord
 {
-    public $articleTags;
+    /**
+     * @var
+     */
+    public $tag;
+
+    public const SCENARIO_CREATE_ARTICLE = 'create';
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -39,38 +46,44 @@ class Articles extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function behaviors(): array
     {
         return [
             'tagInsert' => TagsBehavior::class,
             'class' => TimestampBehavior::class,
+            'imageDelete' => DeleteImageBehavior::class,
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
             [['name', 'description', 'text', 'category'], 'required'],
+            [['tag'], 'required'],
+            [['image'], 'required', 'message' => 'Картинка отсутствует', 'on' => self::SCENARIO_CREATE_ARTICLE],
             [['author_id', 'status', 'visits', 'category'], 'integer'],
             [['text'], 'string'],
             [['articleCreateForm'], 'safe'],
             [['name', 'description', 'image'], 'string', 'max' => 255],
-//            [
-//                ['tags'],
-//                'each',
-//                'rule' => [
-//                    ModelValidator::class,
-//                    'modelClass' => Tag::class
-//                ]
-//            ]
+            [
+                'name',
+                'unique',
+                'targetClass' => self::class,
+                'message' => 'Эта новость уже существует',
+                'on' => self::SCENARIO_CREATE_ARTICLE
+            ],
+
 
         ];
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -88,7 +101,7 @@ class Articles extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getCategory(): ActiveQuery
     {
@@ -96,13 +109,17 @@ class Articles extends ActiveRecord
     }
 
     /**
-     * @return Articles[]
+     * @return array
      */
     public static function getArticles(): array
     {
         return static::find()->all();
     }
 
+    /**
+     * @param int $id
+     * @return ActiveRecord
+     */
     public static function getArticleCategoryTags(int $id): ActiveRecord
     {
         return static::find()
@@ -111,6 +128,10 @@ class Articles extends ActiveRecord
             ->one();
     }
 
+    /**
+     * @param int $id
+     * @return ActiveRecord
+     */
     public static function getArticleTags(int $id): ActiveRecord
     {
         return static::find()
@@ -119,55 +140,35 @@ class Articles extends ActiveRecord
             ->one();
     }
 
-    public static function getArticle(int $id): ActiveRecord
+    /**
+     * @param int $id
+     * @return Articles
+     * @throws NotFoundHttpException
+     */
+    public static function findModel(int $id): self
     {
-        return static::find()
-            ->where(['id' => $id])
-            ->one();
+        if (($model = self::findOne($id)) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public static function deleteArticle(int $id): bool
-    {
-        return (bool)static::deleteAll(['id' => $id]);
-    }
-
+    /**
+     * @return ActiveQuery
+     */
     public function getComments(): ActiveQuery
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
 
-
+    /**
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
+     */
     public function getTags(): ActiveQuery
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
             ->viaTable('article_tag', ['article_id' => 'id']);
     }
-
-
-    public static function createArticle(ArticleForm $model): ?self
-    {
-        $article = new self([
-            'category' => $model->category,
-            'author_id' => $model->authorId,
-            'name' => $model->name,
-            'description' => $model->description,
-            'text' => $model->text,
-            'image' => $model->image,
-            'status' => $model->status,
-        ]);
-        $article->articleTags = $model->tags;
-        return $article->save() ? $article : null;
-
-
-    }
-
-    public static function updateArticle(array $articles): bool
-    {
-        $article = new self();
-        $article->articleTags = $articles['tags'];
-        return $article->save();
-
-    }
-
-
 }

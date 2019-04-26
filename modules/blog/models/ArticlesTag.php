@@ -3,24 +3,23 @@ declare(strict_types=1);
 
 namespace app\modules\blog\models;
 
+use yii\db\ActiveQuery;
 use yii\db\Exception;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article_tag".
- *
  * @property int $article_id
  * @property int $tag_id
  * @property string $created_at
- *
  * @property Articles $news
  * @property Tag $tag
  */
 class ArticlesTag extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -28,7 +27,7 @@ class ArticlesTag extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function behaviors(): array
     {
@@ -43,6 +42,9 @@ class ArticlesTag extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -52,7 +54,7 @@ class ArticlesTag extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -80,8 +82,40 @@ class ArticlesTag extends ActiveRecord
         }
     }
 
+    /**
+     * @param int $articleId
+     */
     public static function deleteArticleTags(int $articleId): void
     {
         static::deleteAll(['article_id' => $articleId]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArticle(): ActiveQuery
+    {
+        return $this->hasOne(Articles::class, ['id' => 'article_id']);
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+
+    public function getTags(): ActiveQuery
+    {
+        return $this->hasOne(Tag::class, ['id' => 'tag_id']);
+    }
+
+    /**
+     * @param int $id
+     * @return ActiveRecord
+     */
+    public static function getArticleTags(int $id): ActiveRecord
+    {
+        return static::find()
+            ->where(['article_id' => $id])
+            ->with('tags')
+            ->one();
     }
 }

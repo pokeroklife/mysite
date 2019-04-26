@@ -27,9 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'name')) ?>
             <?= Html::a('Создать новую категорию', ['./categories/create']) ?>
 
-            <?= $form->field($model, 'tags')
+            <?= $form->field($model, 'tag')
                 ->widget(\kartik\select2\Select2::class, [
-                    'data' => ArrayHelper::map($model->tags, 'name',
+                    'data' => ArrayHelper::map($model->tag, 'name',
                         'name'),
                     'options' => ['placeholder' => 'Select a tag ...', 'multiple' => true],
                     'pluginOptions' => [

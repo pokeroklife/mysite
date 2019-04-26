@@ -58,12 +58,12 @@ class Tag extends ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'status' => 'Status',
-
         ];
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getTagsArticles(): ActiveQuery
     {
@@ -71,6 +71,10 @@ class Tag extends ActiveRecord
             ->viaTable('article_tag', ['tag_id' => 'id']);
     }
 
+    /**
+     * @param array $tags
+     * @return array
+     */
     public static function getTags(array $tags = []): array
     {
         return static::find()
@@ -80,26 +84,16 @@ class Tag extends ActiveRecord
             ->all();
     }
 
-    public static function getTagsArticle(): array
-    {
-        return static::find()->select(['id', 'name'])
-            ->where(['status' => 1])
-            ->all();
-    }
-
-    public static function getTagsName(): array
-    {
-        return static::find()->select(['name'])
-            ->where(['status' => 1])
-            ->all();
-    }
-
+    /**
+     * @param string $name
+     * @return Tag|null
+     */
 
     public static function createTag(string $name): ?self
     {
         $tags = new self();
         $tags->name = $name;
-        return $tags->save()? $tags : null;
+        return $tags->save() ? $tags : null;
     }
 
 

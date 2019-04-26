@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace app\components;
 
-
 use yii\base\Component;
 use yii\imagine\Image;
 use yii\web\UploadedFile;
 
+/**
+ * Class ImageUploadComponent
+ * @package app\components
+ */
 class ImageUploadComponent extends Component
 {
     /**
@@ -20,6 +23,7 @@ class ImageUploadComponent extends Component
     public const THUMBNAIL_HEIGHT = 120;
 
     public const THUMBNAIL_QUALITY = 100;
+
     /**
      * @return string
      */
@@ -43,6 +47,7 @@ class ImageUploadComponent extends Component
     {
         return $this->image->baseName . time() . '.' . $this->image->extension;
     }
+
     /**
      * @param string $currentImage
      */
@@ -50,8 +55,10 @@ class ImageUploadComponent extends Component
     {
         if ($this->fileExist($currentImage)) {
             unlink($this->getFolder() . $currentImage);
+            unlink($this->getFolderThumbnailImage() . $currentImage);
         }
     }
+
     /**
      * @param string $currentImage
      * @return bool
@@ -62,8 +69,8 @@ class ImageUploadComponent extends Component
             return file_exists($this->getFolder() . $currentImage);
         }
         return false;
-
     }
+
     /**
      * @param UploadedFile $file
      * @return string

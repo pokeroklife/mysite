@@ -11,8 +11,15 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Response;
 
+/**
+ * Class AdminController
+ * @package app\modules\admin\controllers
+ */
 class AdminController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [
@@ -25,6 +32,9 @@ class AdminController extends Controller
         ];
     }
 
+    /**
+     * @return string
+     */
     public function actionIndex(): string
     {
         $searchModel = new AuthAssignmentSearch();
@@ -36,6 +46,12 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param $item_name
+     * @param $user_id
+     * @return string
+     * @throws NotFoundHttpException
+     */
     public function actionView($item_name, $user_id): string
     {
         return $this->render('view', [
@@ -43,6 +59,9 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @return string|Response
+     */
     public function actionCreate()
     {
         $model = new AuthAssignment();
@@ -56,6 +75,12 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param $item_name
+     * @param $user_id
+     * @return string|Response
+     * @throws NotFoundHttpException
+     */
     public function actionUpdate($item_name, $user_id)
     {
         $model = $this->findModel($item_name, $user_id);
@@ -69,6 +94,14 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param $item_name
+     * @param $user_id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($item_name, $user_id): Response
     {
         $this->findModel($item_name, $user_id)->delete();
@@ -76,7 +109,12 @@ class AdminController extends Controller
         return $this->redirect(['index']);
     }
 
-
+    /**
+     * @param $item_name
+     * @param $user_id
+     * @return AuthAssignment
+     * @throws NotFoundHttpException
+     */
     protected function findModel($item_name, $user_id): AuthAssignment
     {
         if (($model = AuthAssignment::findOne(['item_name' => $item_name, 'user_id' => $user_id])) !== null) {

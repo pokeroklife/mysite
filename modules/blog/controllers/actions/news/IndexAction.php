@@ -8,14 +8,28 @@ use app\modules\blog\providers\ArticlesProvider;
 use app\modules\blog\providers\TagsProvider;
 use yii\base\Action;
 
+/**
+ * Class IndexAction
+ * @package app\modules\blog\controllers\actions\news
+ */
 class IndexAction extends Action
 {
     /**
-     * @var ArticlesProvider $newsProvider
+     * @var ArticlesProvider
      */
     private $articlesProvider;
+    /**
+     * @var TagsProvider
+     */
     private $tagsProvider;
 
+    /**
+     * IndexAction constructor.
+     * @param $id
+     * @param ArticlesController $controller
+     * @param ArticlesProvider $articlesProvider
+     * @param TagsProvider $tagsProvider
+     */
     public function __construct(
         $id,
         ArticlesController $controller,
@@ -27,6 +41,10 @@ class IndexAction extends Action
         $this->tagsProvider = $tagsProvider;
     }
 
+    /**
+     * @param int|null $tagId
+     * @return string
+     */
     public function run(int $tagId = null): string
     {
         if ($tagId === null) {

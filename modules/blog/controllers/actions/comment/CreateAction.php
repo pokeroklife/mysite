@@ -8,10 +8,23 @@ use app\modules\blog\models\CommentForm;
 use app\modules\blog\providers\CommentsProvider;
 use yii\web\Response;
 
+/**
+ * Class CreateAction
+ * @package app\modules\blog\controllers\actions\comment
+ */
 class CreateAction extends \yii\base\Action
 {
+    /**
+     * @var CommentsProvider
+     */
     private $commentProvider;
 
+    /**
+     * CreateAction constructor.
+     * @param $id
+     * @param CommentController $controller
+     * @param CommentsProvider $commentProvider
+     */
     public function __construct(
         $id,
         CommentController $controller,
@@ -21,6 +34,9 @@ class CreateAction extends \yii\base\Action
         $this->commentProvider = $commentProvider;
     }
 
+    /**
+     * @return Response
+     */
     public function run(): Response
     {
         $comment = new CommentForm();

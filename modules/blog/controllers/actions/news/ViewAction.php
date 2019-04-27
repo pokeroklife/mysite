@@ -9,11 +9,28 @@ use app\modules\blog\providers\ArticlesProvider;
 use app\modules\blog\controllers\ArticlesController;
 use yii\base\Action;
 
+/**
+ * Class ViewAction
+ * @package app\modules\blog\controllers\actions\news
+ */
 class ViewAction extends Action
 {
+    /**
+     * @var ArticlesProvider
+     */
     private $articlesProvider;
+    /**
+     * @var CommentsProvider
+     */
     private $commentProvider;
 
+    /**
+     * ViewAction constructor.
+     * @param $id
+     * @param ArticlesController $controller
+     * @param ArticlesProvider $articlesProvider
+     * @param CommentsProvider $commentProvider
+     */
     public function __construct(
         $id,
         ArticlesController $controller,
@@ -25,6 +42,10 @@ class ViewAction extends Action
         $this->commentProvider = $commentProvider;
     }
 
+    /**
+     * @param int $id
+     * @return string
+     */
     public function run(int $id): string
     {
 

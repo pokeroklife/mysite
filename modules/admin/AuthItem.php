@@ -21,11 +21,14 @@ use yii\db\ActiveQuery;
  * @property AuthItemChild[] $authItemChildren0
  * @property AuthItem[] $children
  * @property AuthItem[] $parents
+
+ * Class AuthItem
+ * @package app\modules\admin
  */
 class AuthItem extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -33,7 +36,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -54,7 +57,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -70,7 +73,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAuthAssignments(): ActiveQuery
     {
@@ -78,7 +81,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getRuleName(): ActiveQuery
     {
@@ -86,7 +89,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAuthItemChildren(): ActiveQuery
     {
@@ -94,7 +97,7 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getAuthItemChildren0(): ActiveQuery
     {
@@ -102,7 +105,8 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getChildren(): ActiveQuery
     {
@@ -111,7 +115,8 @@ class AuthItem extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public function getParents(): ActiveQuery
     {

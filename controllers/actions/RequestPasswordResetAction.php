@@ -7,8 +7,15 @@ use Yii;
 use app\models\PasswordResetRequestForm;
 use yii\base\Action;
 
+/**
+ * Class RequestPasswordResetAction
+ * @package app\controllers\actions
+ */
 class RequestPasswordResetAction extends Action
 {
+    /**
+     * @return string
+     */
     public function run(): string
     {
         $model = new PasswordResetRequestForm();

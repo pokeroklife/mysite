@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\modules\blog\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "categories".
@@ -14,12 +15,13 @@ use yii\behaviors\TimestampBehavior;
  * @property int $created_at
  * @property int $updated_at
  * @property Articles[] $categoriesArticles
- *
+ * Class Categories
+ * @package app\modules\blog\models
  */
 class Categories extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -27,7 +29,7 @@ class Categories extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function behaviors(): array
     {
@@ -36,6 +38,9 @@ class Categories extends \yii\db\ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -46,7 +51,7 @@ class Categories extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -58,15 +63,15 @@ class Categories extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getCategoriesArticles(): object
+    public function getCategoriesArticles(): ActiveQuery
     {
         return $this->hasMany(Articles::class, ['category' => 'id']);
     }
 
     /**
-     * @return Categories[]
+     * @return array
      */
     public static function getCategories(): array
     {
@@ -74,11 +79,19 @@ class Categories extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     */
     public static function deleteCategory(int $id): bool
     {
         return (bool)static::deleteAll(['id' => $id]);
     }
 
+    /**
+     * @param CategoriesCreateForm $model
+     * @return bool
+     */
     public static function createCategory(CategoriesCreateForm $model): bool
     {
         $category = new self();

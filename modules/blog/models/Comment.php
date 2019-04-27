@@ -19,11 +19,13 @@ use yii\db\Expression;
  * @property string $created_at
  *
  * @property Comment[] $comments
+ * Class Comment
+ * @package app\modules\blog\models
  */
 class Comment extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function behaviors(): array
     {
@@ -40,13 +42,16 @@ class Comment extends ActiveRecord
         ];
     }
 
+    /**
+     * @return string
+     */
     public static function tableName(): string
     {
         return 'comment';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -59,7 +64,7 @@ class Comment extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -71,14 +76,17 @@ class Comment extends ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getNews(): ActiveQuery
     {
         return $this->hasOne(Articles::class, ['id' => 'article_id']);
     }
 
-
+    /**
+     * @param int $id
+     * @return array
+     */
     public static function getComment(int $id): array
     {
         return static::find()
@@ -88,6 +96,10 @@ class Comment extends ActiveRecord
             ->all();
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     */
     public static function deleteComment(int $id): bool
     {
         return (bool)static::deleteAll(['id' => $id]);

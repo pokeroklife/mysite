@@ -7,6 +7,10 @@ use app\modules\blog\controllers\CategoriesController;
 use app\modules\blog\providers\CategoryProvider;
 use yii\base\Action;
 
+/**
+ * Class IndexAction
+ * @package app\modules\blog\controllers\actions\categories
+ */
 class IndexAction extends Action
 {
     /**
@@ -14,6 +18,12 @@ class IndexAction extends Action
      */
     private $categoriesProvider;
 
+    /**
+     * IndexAction constructor.
+     * @param $id
+     * @param CategoriesController $controller
+     * @param CategoryProvider $categoriesProvider
+     */
     public function __construct(
         $id,
         CategoriesController $controller,
@@ -23,6 +33,9 @@ class IndexAction extends Action
         $this->categoriesProvider = $categoriesProvider;
     }
 
+    /**
+     * @return string
+     */
     public function run(): string
     {
         $categories = $this->categoriesProvider->getCategories();

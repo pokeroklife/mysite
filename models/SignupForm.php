@@ -6,19 +6,34 @@ namespace app\models;
 use yii\base\Model;
 
 /**
- * Signup form
+ * Class SignupForm
+ * @package app\models
  */
 class SignupForm extends Model
 {
-
+    /**
+     * @var
+     */
     public $username;
+    /**
+     * @var
+     */
     public $email;
+    /**
+     * @var
+     */
     public $password;
+    /**
+     * @var
+     */
     public $id;
+    /**
+     * @var
+     */
     public $verifyCode;
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules(): array
     {
@@ -48,6 +63,9 @@ class SignupForm extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return [

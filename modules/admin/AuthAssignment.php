@@ -13,11 +13,13 @@ use yii\db\ActiveQuery;
  * @property int $created_at
  *
  * @property AuthItem $itemName
+ * Class AuthAssignment
+ * @package app\modules\admin
  */
 class AuthAssignment extends \yii\db\ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public static function tableName(): string
     {
@@ -25,7 +27,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -45,7 +47,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {
@@ -57,7 +59,7 @@ class AuthAssignment extends \yii\db\ActiveRecord
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
     public function getItemName(): ActiveQuery
     {

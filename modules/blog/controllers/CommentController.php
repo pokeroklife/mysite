@@ -7,8 +7,15 @@ use app\modules\blog\controllers\actions\comment\DeleteAction;
 use \yii\web\Controller;
 use app\modules\blog\controllers\actions\comment\CreateAction;
 
+/**
+ * Class CommentController
+ * @package app\modules\blog\controllers
+ */
 class CommentController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [
@@ -38,6 +45,9 @@ class CommentController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actions(): array
     {
         $action = parent::actions();

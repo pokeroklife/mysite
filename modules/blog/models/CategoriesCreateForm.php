@@ -5,13 +5,24 @@ namespace app\modules\blog\models;
 
 use yii\base\Model;
 
-
+/**
+ * Class CategoriesCreateForm
+ * @package app\modules\blog\models
+ */
 class CategoriesCreateForm extends Model
 {
+    /**
+     * @var
+     */
     public $name;
-
+    /**
+     * @var
+     */
     public $status;
 
+    /**
+     * @return array
+     */
 
     public function rules(): array
     {
@@ -30,6 +41,9 @@ class CategoriesCreateForm extends Model
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels(): array
     {
         return [

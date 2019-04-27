@@ -7,12 +7,13 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AuthAssignmentSearch represents the model behind the search form of `app\models\AuthAssignment`.
+ * Class AuthAssignmentSearch
+ * @package app\modules\admin
  */
 class AuthAssignmentSearch extends AuthAssignment
 {
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function rules(): array
     {
@@ -23,7 +24,7 @@ class AuthAssignmentSearch extends AuthAssignment
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function scenarios(): array
     {
@@ -31,10 +32,7 @@ class AuthAssignmentSearch extends AuthAssignment
     }
 
     /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
+     * @param $params
      * @return ActiveDataProvider
      */
     public function search($params): ActiveDataProvider

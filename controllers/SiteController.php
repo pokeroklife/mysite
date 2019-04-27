@@ -15,8 +15,15 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\web\ErrorAction;
 
+/**
+ * Class SiteController
+ * @package app\controllers
+ */
 class SiteController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [
@@ -45,6 +52,9 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actions(): array
     {
         return [

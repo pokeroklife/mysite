@@ -10,13 +10,23 @@ use app\modules\shop\models\Products;
 use yii\base\Action;
 use yii\web\Response;
 
+/**
+ * Class DeleteAction
+ * @package app\modules\blog\controllers\actions\news
+ */
 class DeleteAction extends Action
 {
     /**
-     * @var ArticlesProvider $newsProvider
+     * @var ArticlesProvider
      */
     private $articlesProvider;
 
+    /**
+     * DeleteAction constructor.
+     * @param $id
+     * @param ArticlesController $controller
+     * @param ArticlesProvider $articlesProvider
+     */
     public function __construct($id, ArticlesController $controller, ArticlesProvider $articlesProvider)
     {
         parent::__construct($id, $controller);

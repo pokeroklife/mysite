@@ -16,21 +16,22 @@ use yii\db\ActiveRecord;
  * @property int $created_at
  * @property int $updated_at
  *
- * @property ArticlesTag[] $newsTags
+ * @property Articles[] $tagsArticles
  * @property Articles[] $news
  */
 class Tag extends ActiveRecord
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
+
     public static function tableName(): string
     {
         return 'tag';
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function behaviors(): array
     {
@@ -39,6 +40,9 @@ class Tag extends ActiveRecord
         ];
     }
 
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -50,7 +54,7 @@ class Tag extends ActiveRecord
     }
 
     /**
-     * {@inheritdoc}
+     * @return array
      */
     public function attributeLabels(): array
     {

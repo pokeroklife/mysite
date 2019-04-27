@@ -7,11 +7,14 @@ use yii\base\InvalidArgumentException;
 use yii\base\Model;
 
 /**
- * Password reset form
+ * Class ResetPasswordForm
+ * @package app\models
  */
 class ResetPasswordForm extends Model
 {
-
+    /**
+     * @var
+     */
     public $password;
 
     /**
@@ -42,7 +45,7 @@ class ResetPasswordForm extends Model
     }
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules(): array
     {
@@ -53,9 +56,7 @@ class ResetPasswordForm extends Model
     }
 
     /**
-     * Resets password.
-     *
-     * @return bool if password was reset.
+     * @return bool
      */
     public function resetPassword(): bool
     {

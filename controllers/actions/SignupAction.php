@@ -7,8 +7,15 @@ use app\models\SignupForm;
 use app\models\User;
 use yii\base\Action;
 
+/**
+ * Class SignupAction
+ * @package app\controllers\actions
+ */
 class SignupAction extends Action
 {
+    /**
+     * @return string
+     */
     public function run(): string
     {
         $model = new SignupForm();

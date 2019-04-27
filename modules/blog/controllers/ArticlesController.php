@@ -12,8 +12,15 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
+/**
+ * Class ArticlesController
+ * @package app\modules\blog\controllers
+ */
 class ArticlesController extends Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors(): array
     {
         return [
@@ -44,6 +51,9 @@ class ArticlesController extends Controller
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actions(): array
     {
         $actions = parent::actions();

@@ -19,10 +19,27 @@ use yii\web\UploadedFile;
  */
 class CreateAction extends Action
 {
+    /**
+     * @var CategoryProvider
+     */
     private $categoriesProvider;
+    /**
+     * @var TagsProvider
+     */
     private $tagsProvider;
+    /**
+     * @var ImageUploadComponent
+     */
     private $imageComponent;
 
+    /**
+     * CreateAction constructor.
+     * @param $id
+     * @param ArticlesController $controller
+     * @param CategoryProvider $categoriesProvider
+     * @param TagsProvider $tagsProvider
+     * @param ImageUploadComponent $imageComponent
+     */
     public function __construct(
         $id,
         ArticlesController $controller,

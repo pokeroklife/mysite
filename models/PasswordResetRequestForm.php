@@ -7,14 +7,18 @@ use Yii;
 use yii\base\Model;
 
 /**
- * Password reset request form
+ * Class PasswordResetRequestForm
+ * @package app\models
  */
 class PasswordResetRequestForm extends Model
 {
+    /**
+     * @var
+     */
     public $email;
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules(): array
     {

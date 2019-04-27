@@ -8,8 +8,16 @@ use Yii;
 use app\models\ResetPasswordForm;
 use yii\base\Action;
 
+/**
+ * Class ResetPasswordAction
+ * @package app\controllers\actions
+ */
 class ResetPasswordAction extends Action
 {
+    /**
+     * @param $token
+     * @return string
+     */
     public function run($token): string
     {
         try {

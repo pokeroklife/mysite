@@ -14,12 +14,21 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    /**
+     * @var
+     */
     public $email;
-
+    /**
+     * @var
+     */
     public $password;
-
+    /**
+     * @var bool
+     */
     public $rememberMe = true;
-
+    /**
+     * @var bool
+     */
     private $_user = false;
     /**
      * @return array the validation rules.

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace app\modules\shop\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "products_category".
@@ -55,4 +57,29 @@ class ProductsCategory extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    /**
+     * @return array
+     */
+    public static function getCategories(): array
+    {
+        return self::find()->all();
+    }
+
+    /**
+     * @param $name
+     * @return ProductsCategory
+     */
+    public static function setCategory($name): self
+    {
+        $category = new self();
+        $category->name = $name;
+        return $category->save() ? $category : null;
+    }
+    public function getCategoryProducts(): ActiveQuery
+    {
+        return $this->hasMany(Products::class, ['category_id' => 'id']);
+    }
+
+
 }

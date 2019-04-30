@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\modules\shop\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\web\NotFoundHttpException;
 
 /**
  * This is the model class for table "products_amount".
@@ -30,8 +31,9 @@ class ProductsAmount extends \yii\db\ActiveRecord
     public function rules(): array
     {
         return [
-            [['product_id', 'amount'], 'integer'],
-            [['amount'], 'required'],
+            [['product_id', 'amount', 'price'], 'integer'],
+            [['measure', 'currency'], 'string', 'max' => 100],
+            [['amount', 'measure'], 'required'],
         ];
     }
 
@@ -50,7 +52,24 @@ class ProductsAmount extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'product_id' => 'Product ID',
-            'amount' => 'Amount',
+            'amount' => 'Количество',
+            'measure' => 'Единица измерения',
+            'price' => 'Цена товара',
+            'currency' => 'Валюта',
         ];
+    }
+
+    /**
+     * @param int $id
+     * @return ProductsAmount
+     * @throws NotFoundHttpException
+     */
+    public static function findAmount(int $id): self
+    {
+        if (($model = self::findOne(['product_id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

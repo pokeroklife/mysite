@@ -44,7 +44,8 @@ class CreateAction extends \yii\base\Action
         $comment->newsId = \Yii::$app->session->get('newsId');
         if ($comment->load(\Yii::$app->request->post()) &&
             $this->commentProvider->createComment($comment)) {
-
-        }return $this->controller->redirect(['articles/view', 'id' => $comment->newsId]);
+            \Yii::$app->session->setFlash('success', 'коментарий оставлен');
+        }
+        return $this->controller->redirect(['articles/view', 'id' => $comment->newsId]);
     }
 }

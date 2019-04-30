@@ -66,7 +66,7 @@ class TagsBehavior extends Behavior
         $tags = Tag::getTags($article->tag);
         $newTags = $this->getNewTags($tags, $article->tag);
         foreach ($newTags as $name) {
-            if (($tag = Tag::createTag($name)) === null) {
+            if (($tag = Tag::createTag((string)$name)) === null) {
                 throw new Exception('тэги не сохранились');
             }
             $tags[] = $tag;

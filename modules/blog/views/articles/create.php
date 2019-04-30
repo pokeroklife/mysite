@@ -4,7 +4,6 @@ declare(strict_types=1);
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
-use \app\modules\blog\models\Categories;
 
 $this->title = 'Создание новой новости';
 $this->params['breadcrumbs'][] = $this->title;

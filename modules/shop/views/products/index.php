@@ -25,13 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => \yii\grid\SerialColumn::class],
 
-            'id',
-            'category_id',
             'name',
+
+            [
+                'value' => 'categoryProducts.name',
+                'label' => 'Название категории'
+            ],
+
+            'productDetail.description',
+            'productDetail.detail',
+            'productAmount.amount',
+            'productAmount.measure',
+            'productAmount.price',
+            'productAmount.currency',
             [
                 'format' => 'html',
-                'label' => 'Image',
+                'label' => 'Изображение',
                 'value' => static function ($data) {
+
                     return Html::img($data->getImage(), ['width' => 200]);
                 }
             ],

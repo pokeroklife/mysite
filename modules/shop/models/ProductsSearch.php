@@ -15,8 +15,7 @@ class ProductsSearch extends Products
     public function rules(): array
     {
         return [
-            [['id', 'category_id'], 'integer'],
-            [['name', 'image'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -29,7 +28,7 @@ class ProductsSearch extends Products
      */
     public function search($params): ActiveDataProvider
     {
-        $query = Products::find();
+        $query = Products::find()->with('productDetail', 'categoryProducts', 'productAmount');
 
 
         $dataProvider = new ActiveDataProvider([
@@ -42,11 +41,11 @@ class ProductsSearch extends Products
             return $dataProvider;
         }
 
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'category_id' => $this->category_id,
-            'image' => $this->image,
-        ]);
+//        $query->andFilterWhere([
+//            'id' => $this->id,
+//            'category_id' => $this->category_id,
+//            'image' => $this->image,
+//        ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
 

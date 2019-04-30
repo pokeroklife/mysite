@@ -5,7 +5,10 @@ namespace app\modules\shop\controllers\actions\products;
 
 use app\components\ImageUploadComponent;
 use app\modules\shop\controllers\ProductsController;
+use app\modules\shop\models\ProductDetail;
 use app\modules\shop\models\Products;
+use app\modules\shop\models\ProductsAmount;
+use app\modules\shop\models\ProductsCategory;
 use yii\base\Action;
 use yii\web\UploadedFile;
 
@@ -15,7 +18,10 @@ use yii\web\UploadedFile;
  */
 class CreateAction extends Action
 {
-        private $imageComponent;
+    /**
+     * @var ImageUploadComponent
+     */
+    private $imageComponent;
 
     /**
      * CreateAction constructor.
@@ -40,20 +46,35 @@ class CreateAction extends Action
     public function run()
     {
         $model = new Products(['scenario' => Products::SCENARIO_CREATE_PRODUCT]);
-
-//        var_dump($model->validate());
+        $description = new ProductDetail(['scenario' => ProductDetail::SCENARIO_CREATE_PRODUCT]);
+        $amount = new ProductsAmount();
         if (\Yii::$app->request->isPost
             && $model->load(\Yii::$app->request->post())
-            && ($file = UploadedFile::getInstance($model, 'image')) !== null
-            ) {
+            && $description->load(\Yii::$app->request->post())
+            && $amount->load(\Yii::$app->request->post())
+            && ($file = UploadedFile::getInstance($description, 'image')) !== null
+        ) {
 
-            $model->image = $this->imageComponent->saveImage($file);
+            $description->image = $this->imageComponent->saveImage($file);
+
             if ($model->save()) {
-                return $this->controller->redirect(['view', 'id' => $model->id]);
+                $description->product_id = $model->id;
+                $amount->product_id = $model->id;
+
+
+                if ($description->save() && $amount->save()) {
+                    return $this->controller->redirect(['view', 'id' => $model->id]);
+                }
+
             }
         }
+
+        $categories = ProductsCategory::getCategories();
         return $this->controller->render('create', [
             'model' => $model,
+            'categories' => $categories,
+            'description' => $description,
+            'amount' => $amount
         ]);
     }
 }

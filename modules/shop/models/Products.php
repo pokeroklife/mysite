@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace app\modules\shop\models;
 
 use app\components\DeleteImageBehavior;
+use app\modules\shop\behaviors\CategoryBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,7 +16,6 @@ use yii\web\NotFoundHttpException;
  * @property int $id
  * @property int $category_id
  * @property string $name
- * @property string $image
  * @property int $created_at
  * @property int $updated_at
  */
@@ -35,11 +37,8 @@ class Products extends \yii\db\ActiveRecord
     public function rules(): array
     {
         return [
-            [['category_id'], 'integer'],
             [['name', 'category_id'], 'required'],
             [['name'], 'string', 'max' => 255],
-            [['image'], 'required', 'on' => self::SCENARIO_CREATE_PRODUCT],
-            [['image'], 'file', 'extensions' => 'jpg, png'],
             [
                 'name',
                 'unique',
@@ -58,6 +57,7 @@ class Products extends \yii\db\ActiveRecord
         return [
             'class' => TimestampBehavior::class,
             'imageDelete' => DeleteImageBehavior::class,
+            'category' => CategoryBehavior::class,
         ];
     }
 
@@ -68,9 +68,8 @@ class Products extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
-            'name' => 'Name',
-            'image' => 'Изображение товара',
+            'category_id' => 'Название категории',
+            'name' => 'Название продукта',
         ];
     }
 
@@ -95,6 +94,24 @@ class Products extends \yii\db\ActiveRecord
      */
     public function getImage(): string
     {
-        return $this->image ? '/uploads/thumbnail/' . $this->image : '/no-image.png';
+        return $this->productDetail->image ? '/uploads/thumbnail/' . $this->productDetail->image : '/no-image.png';
+    }
+
+    /**
+     * @return ActiveQuery
+     */
+    public function getProductDetail(): ActiveQuery
+    {
+        return $this->hasOne(ProductDetail::class, ['product_id' => 'id']);
+    }
+
+    public function getProductAmount(): ActiveQuery
+    {
+        return $this->hasOne(ProductsAmount::class, ['product_id' => 'id']);
+    }
+
+    public function getCategoryProducts(): ActiveQuery
+    {
+        return $this->hasOne(ProductsCategory::class, ['id' => 'category_id']);
     }
 }

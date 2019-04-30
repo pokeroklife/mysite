@@ -5,7 +5,10 @@ namespace app\modules\shop\controllers\actions\products;
 
 use app\components\ImageUploadComponent;
 use app\modules\shop\controllers\ProductsController;
+use app\modules\shop\models\ProductDetail;
 use app\modules\shop\models\Products;
+use app\modules\shop\models\ProductsAmount;
+use app\modules\shop\models\ProductsCategory;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -20,6 +23,7 @@ class UpdateAction extends Action
      * @var ImageUploadComponent
      */
     private $imageComponent;
+
     public function __construct(
         $id,
         ProductsController $controller,
@@ -41,23 +45,34 @@ class UpdateAction extends Action
     public function run(int $id)
     {
         $model = Products::findModel($id);
-        $currentImage = $model->image;
-        if (\Yii::$app->request->isPost) {
-            $model->load(\Yii::$app->request->post());
-            if (($file = UploadedFile::getInstance($model, 'image')) !== null) {
-                $model->image = $this->imageComponent->saveImage($file);
+        $description = ProductDetail::findDescription($id);
+        $amount = ProductsAmount::findAmount($id);
+
+        $currentImage = $description->image;
+        if (\Yii::$app->request->isPost
+            && $model->load(\Yii::$app->request->post())
+            && $description->load(\Yii::$app->request->post())
+            && $amount->load(\Yii::$app->request->post())) {
+
+            if (($file = UploadedFile::getInstance($description, 'image')) !== null) {
+                $description->image = $this->imageComponent->saveImage($file);
                 $this->imageComponent->deleteCurrentImage($currentImage);
 
             } else {
-                $model->image = $currentImage;
+                $description->image = $currentImage;
             }
-            if ($model->save()) {
+
+            if ($model->save() && $description->save() && $amount->save()) {
                 return $this->controller
                     ->redirect(['view', 'id' => $model->id]);
             }
         }
+        $categories = ProductsCategory::getCategories();
         return $this->controller->render('update', [
             'model' => $model,
+            'categories' => $categories,
+            'description' => $description,
+            'amount' => $amount
         ]);
     }
 

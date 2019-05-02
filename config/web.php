@@ -7,6 +7,9 @@ $db2 = require __DIR__ . '/db2.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+
+    'language' => 'en-US',
+
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -30,15 +33,20 @@ $config = [
     'components' => [
         'i18n' => [
             'translations' => [
-                'app*' => [
+                '*' => [
                     'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@app/messages'
-                ]
-            ]
+                    'basePath' => '@web\messages',
+                    'sourceLanguage' => 'en',
+                    'fileMap' => [
+//                        'main' => '/main.php',
+                    ],
+                ],
+            ],
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'a5FYmgcw-q6_gyfMYAq1hC0tllQpx2ZR',
+            'class' => \app\components\LangRequest::class,
         ],
         'cache' => [
             'class' => \yii\caching\FileCache::class,
@@ -75,9 +83,11 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'class' => \app\components\LangUrlManager::class,
             'rules' => [
-                'site' => '/site/index',
-            ],
+                '/' => 'site/index',
+                '<controller:\w+>/<action:\w+>/*' => '<controller>/<action>',
+            ]
         ],
 
     ],

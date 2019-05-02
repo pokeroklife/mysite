@@ -10,6 +10,9 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\widgets\WLang;
+
+
 
 AppAsset::register($this);
 ?>
@@ -38,7 +41,7 @@ AppAsset::register($this);
         'innerContainerOptions' => [
             'class' => 'container'
         ],
-        'brandLabel' => 'phpNT',
+        'brandLabel' => 'Site :)',
         'brandUrl' => Yii::$app->homeUrl,
         'brandOptions' => [
             'class' => 'navbar-brand'
@@ -48,14 +51,15 @@ AppAsset::register($this);
     $menuItems = [
 
     ];
+
     if (Yii::$app->user->can('administration')) {
-        $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
-        $menuItems[] = ['label' => 'Test', 'url' => ['/test/index']];
-        $menuItems[] = ['label' => 'Gii', 'url' => ['/gii']];
-        $menuItems[] = ['label' => 'SetRole', 'url' => ['/admin/admin']];
-        $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/articles']];
-        $menuItems[] = ['label' => 'Создание новостей', 'url' => ['/blog/articles/create']];
-        $menuItems[] = ['label' => 'типа магазин', 'url' => ['/shop/products']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Home'), 'url' => ['/site/index']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Test'), 'url' => ['/test/index']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Gii'), 'url' => ['/gii']];
+        $menuItems[] = ['label' => \Yii::t('app', 'SetRole'), 'url' => ['/admin/admin']];
+        $menuItems[] = ['label' => \Yii::t('app', 'All news'), 'url' => ['/blog/articles']];
+        $menuItems[] = ['label' => \Yii::t('app', 'News create'), 'url' => ['/blog/articles/create']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Shop'), 'url' => ['/shop/products']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -96,6 +100,8 @@ AppAsset::register($this);
             'links' => $this->params['breadcrumbs'] ?? []
         ])
         ?>
+
+        <?= WLang::widget();?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

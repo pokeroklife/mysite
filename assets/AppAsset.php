@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace app\assets;
 
-use yii\bootstrap4\BootstrapAsset;
+use yii\bootstrap\BootstrapAsset;
 use yii\web\AssetBundle;
 use yii\web\YiiAsset;
 
@@ -18,10 +18,11 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
-        'css/main.css',
+//        'css/site.css',
+//        'css/main.css',
     ];
     public $js = [
+        'js/main.js',
     ];
     public $depends = [
         YiiAsset::class,

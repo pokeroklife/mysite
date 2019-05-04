@@ -94,24 +94,41 @@ class Products extends \yii\db\ActiveRecord
      */
     public function getImage(): string
     {
-        return $this->productDetail->image ? '/uploads/thumbnail/' . $this->productDetail->image : '/no-image.png';
+        return $this->detail->image ? '/uploads/thumbnail/' . $this->detail->image : '/no-image.png';
     }
 
     /**
      * @return ActiveQuery
      */
-    public function getProductDetail(): ActiveQuery
+    public function getDetail(): ActiveQuery
     {
         return $this->hasOne(ProductDetail::class, ['product_id' => 'id']);
     }
 
-    public function getProductAmount(): ActiveQuery
+    public function getAmount(): ActiveQuery
     {
         return $this->hasOne(ProductsAmount::class, ['product_id' => 'id']);
     }
 
-    public function getCategoryProducts(): ActiveQuery
+    public function getCategory(): ActiveQuery
     {
         return $this->hasOne(ProductsCategory::class, ['id' => 'category_id']);
+    }
+
+    public static function getInfo(int $id = null)
+    {
+        return static::find()
+            ->with('category', 'detail', 'amount')
+            ->andFilterWhere(['id' => $id])
+            ->all();
+
+    }
+    public static function findProduct(int $id)
+    {
+        return static::find()
+            ->where(['id' => $id])
+            ->with('category', 'detail', 'amount')
+            ->one();
+
     }
 }

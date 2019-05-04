@@ -52,9 +52,8 @@ class CreateAction extends Action
             && $model->load(\Yii::$app->request->post())
             && $description->load(\Yii::$app->request->post())
             && $amount->load(\Yii::$app->request->post())
-            && ($file = UploadedFile::getInstance($description, 'image')) !== null
+            && $file = UploadedFile::getInstance($description, 'image')
         ) {
-
             $description->image = $this->imageComponent->saveImage($file);
 
             if ($model->save()) {

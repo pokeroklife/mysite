@@ -13,11 +13,6 @@ use yii\web\UploadedFile;
  */
 class ImageUploadComponent extends Component
 {
-    /**
-     * @var $image
-     */
-    public $image;
-
     public const THUMBNAIL_WIDTH = 200;
 
     public const THUMBNAIL_HEIGHT = 120;
@@ -25,79 +20,49 @@ class ImageUploadComponent extends Component
     public const THUMBNAIL_QUALITY = 100;
 
     /**
-     * @return string
+     * @var $image
      */
-    private function getFolder(): string
+    public $image;
+
+    private function getFolder(string $fileName): string
     {
-        return \Yii::getAlias('@web') . 'uploads/';
+        return \Yii::getAlias('@web') . "uploads/{$fileName}";
     }
 
-    /**
-     * @return string
-     */
-    private function getFolderThumbnailImage(): string
+    private function getFolderThumbnailImage(string $fileName): string
     {
-        return \Yii::getAlias('@web') . 'uploads/thumbnail/';
+        return \Yii::getAlias('@web') . "uploads/thumbnail/{$fileName}";
     }
 
-    /**
-     * @return string
-     */
     private function generateFileName(): string
     {
         return $this->image->baseName . time() . '.' . $this->image->extension;
     }
 
-    /**
-     * @param string $currentImage
-     */
     public function deleteCurrentImage(string $currentImage): void
     {
-        if ($this->fileExist($currentImage)) {
-            unlink($this->getFolder() . $currentImage);
-            unlink($this->getFolderThumbnailImage() . $currentImage);
+        if (!empty($currentImage) && file_exists($this->getFolder($currentImage))) {
+            unlink($this->getFolder($currentImage));
+            unlink($this->getFolderThumbnailImage($currentImage));
         }
     }
 
-    /**
-     * @param string $currentImage
-     * @return bool
-     */
-    private function fileExist(string $currentImage): bool
-    {
-        if (!empty($currentImage) && $currentImage !== null) {
-            return file_exists($this->getFolder() . $currentImage);
-        }
-        return false;
-    }
-
-    /**
-     * @param UploadedFile $file
-     * @return string
-     */
-    public function saveImage(UploadedFile $file): string
+    public function saveImage(UploadedFile $file): ?string
     {
         $this->image = $file;
         $fileName = $this->generateFileName();
 
-        $this->image->saveAs($this->getFolder() . $fileName);
-        $this->saveThumbnailImage($fileName);
-        return $fileName;
+        if ($this->image->saveAs($this->getFolder($fileName))) {
+            $this->saveThumbnailImage($fileName);
+            return $fileName;
+        }
+
+        return null;
     }
 
-    /**
-     * @param string $fileName
-     * @return bool
-     */
-    public function saveThumbnailImage(string $fileName): bool
+    public function saveThumbnailImage(string $fileName): void
     {
-        $aliasImage = $this->getFolder() . '/' . $fileName;
-        $aliasSmallImage = $this->getFolderThumbnailImage() . '/' . $fileName;
-        if (Image::thumbnail($aliasImage, self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT)
-            ->save(\Yii::getAlias($aliasSmallImage), ['quality' => self::THUMBNAIL_QUALITY])) {
-
-            return true;
-        }
-        return false;
+        Image::thumbnail($this->getFolder($fileName), self::THUMBNAIL_WIDTH, self::THUMBNAIL_HEIGHT)
+            ->save($this->getFolderThumbnailImage($fileName), ['quality' => self::THUMBNAIL_QUALITY]);
     }
 }

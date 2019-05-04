@@ -13,7 +13,6 @@ use app\assets\AppAsset;
 use app\widgets\WLang;
 
 
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -34,17 +33,12 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'options' => [
-            'class' => 'navbar',
+            'class' => 'navbar-inverse navbar',
             'id' => 'main-menu',
         ],
         'renderInnerContainer' => true,
         'innerContainerOptions' => [
             'class' => 'container'
-        ],
-        'brandLabel' => 'Site :)',
-        'brandUrl' => Yii::$app->homeUrl,
-        'brandOptions' => [
-            'class' => 'navbar-brand'
         ],
     ]);
 
@@ -53,13 +47,14 @@ AppAsset::register($this);
     ];
 
     if (Yii::$app->user->can('administration')) {
-        $menuItems[] = ['label' => \Yii::t('app', 'Home'), 'url' => ['/site/index']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Home'), 'url' => ['site/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Test'), 'url' => ['/test/index']];
         $menuItems[] = ['label' => \Yii::t('app', 'Gii'), 'url' => ['/gii']];
         $menuItems[] = ['label' => \Yii::t('app', 'SetRole'), 'url' => ['/admin/admin']];
         $menuItems[] = ['label' => \Yii::t('app', 'All news'), 'url' => ['/blog/articles']];
         $menuItems[] = ['label' => \Yii::t('app', 'News create'), 'url' => ['/blog/articles/create']];
-        $menuItems[] = ['label' => \Yii::t('app', 'Shop'), 'url' => ['/shop/products']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Shop admin'), 'url' => ['/shop/products']];
+        $menuItems[] = ['label' => \Yii::t('app', 'Shop view'), 'url' => ['/shop/display']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
@@ -70,7 +65,7 @@ AppAsset::register($this);
             . '</li>';
     } else {
         if (Yii::$app->user->can('userRight')) {
-            $menuItems[] = ['label' => 'Home', 'url' => ['/site/index']];
+            $menuItems[] = ['label' => 'Home', 'url' => ['site/index']];
             $menuItems[] = ['label' => 'Все новости', 'url' => ['/blog/articles/']];
             $menuItems[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -101,7 +96,7 @@ AppAsset::register($this);
         ])
         ?>
 
-        <?= WLang::widget();?>
+        <?= WLang::widget(); ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
@@ -114,7 +109,15 @@ AppAsset::register($this);
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
 </footer>
+<?php \yii\bootstrap\Modal::begin([
+    'header' => '<h2>Ваша корзина</h2>',
+    'id' => 'cart-modal',
+    'footer' => '<button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
+                   <button type="button" class="btn btn-primary">Оформить заказ</button>
+                   <button type="button" class="btn btn-danger" onclick="clearCart()">Очистить корзину</button>'
 
+]) ?>
+<?php \yii\bootstrap\Modal::end() ?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  * Class Lang
  * @package app\models
  */
-class Lang extends \yii\db\ActiveRecord
+class Lang extends ActiveRecord
 {
     /**
      * @var
@@ -35,8 +35,8 @@ class Lang extends \yii\db\ActiveRecord
             'timestamp' => [
                 'class' => TimestampBehavior::class,
                 'attributes' => [
-                    \yii\db\ActiveRecord::EVENT_BEFORE_INSERT => ['date_create', 'date_update'],
-                    \yii\db\ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['date_create', 'date_update'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['date_update'],
                 ],
             ],
         ];
